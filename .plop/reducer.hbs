@@ -1,0 +1,21 @@
+{{#ifEqual type 'Object'}}
+export default (prevState = {}, action) => {
+{{/ifEqual}}
+{{#ifEqual type 'Array'}}
+export default (prevState = [], action) => {
+{{/ifEqual}}
+{{#ifEqual type 'Primary'}}
+export default (prevState = null, action) => {
+{{/ifEqual}}
+  // Add your action conditionals here
+
+   {{#ifEqual type 'Object'}}
+  return { ...prevState }
+   {{/ifEqual}}
+   {{#ifEqual type 'Array'}}
+  return [ ...prevState ]
+   {{/ifEqual}}
+   {{#ifEqual type 'Primary'}}
+  return prevState
+   {{/ifEqual}}
+}

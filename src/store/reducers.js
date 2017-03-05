@@ -3,6 +3,7 @@ import locationReducer from './location'
 import guestsReducer from 'reducers/guests'
 import requestsReducer from 'reducers/requests'
 import configReducer from 'reducers/config'
+import personGroupsReducer from 'reducers/personGroups'
 // Import Reducers Here (do not delete this line)
 
 export const makeRootReducer = (asyncReducers) => {
@@ -11,6 +12,7 @@ export const makeRootReducer = (asyncReducers) => {
     guests: guestsReducer,
     requests: requestsReducer,
     config: configReducer,
+    personGroups: personGroupsReducer,
     // Add Reducers Here (do not delete this line)
     ...asyncReducers
   })

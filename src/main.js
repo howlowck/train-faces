@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
-import { getAllGuests } from 'actions/guest'
+// import { getAllGuests } from 'actions/guest'
 import { loadConfig } from 'actions/config'
 
 // ========================================================
@@ -24,7 +24,7 @@ let render = () => {
     MOUNT_NODE
   )
   // Kickoff some API calls
-  store.dispatch(getAllGuests())
+  // store.dispatch(getAllGuests())
   store.dispatch(loadConfig())
 }
 

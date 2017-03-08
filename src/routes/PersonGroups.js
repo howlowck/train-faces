@@ -5,8 +5,9 @@ import CreatePersonPage from 'components/pages/CreatePersonPage'
 import PersonPage from 'components/pages/PersonPage'
 import { requestListPersons, setPersons } from 'actions/person'
 
-const personFound = (persons = [], personId) => {
+const personFound = (persons, personId) => {
   // Assuming the personList of the group
+  persons = !persons ? [] : persons
   return !!persons.find((person) => person.personId === personId)
 }
 

@@ -55,6 +55,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       }).then(() => {
         // TODO: redirect to the newly created Person
         router.push(`/person-groups/${groupId}/${newPersonId}`)
+        dispatch(inputChangeNewPersonName(groupId, ''))
+        dispatch(inputChangeNewPersonUserData(groupId, ''))
       })
     }
   }

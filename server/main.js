@@ -13,13 +13,24 @@ const _ = require('lodash')
 const app = express()
 const container = new Container()
 
+const parseBase64 = (base64) => {
+  var match = /data:([^;]+);base64,(.*)/.exec(base64)
+  if (!match) {
+    return null
+  }
+
+  return {
+    contentType: match[1],
+    data: new Buffer(match[2], 'base64')
+  }
+}
 // container.register('faceApiRepo', (apiKey) => new FaceApiRepo(apiKey), true)
 container.register('faceApi', () => new FakeRepo(), true)
 
 // Apply gzip compression
 app.use(compress())
 
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: '5mb' }))
 
 const getKeys = (req) => {
   const faceApiKey = req.get('COG-SERVICES-FACEAPI-KEY')
@@ -75,10 +86,19 @@ app.post('/persons', (req, res) => {
 
 app.post('/face', (req, res) => {
   const api = req.faceApi
-  const { groupId, personId, userData = '' } = req.body
-  api.createFace(groupId, personId, { userData })
-    .then(data => {
-      res.json(data)
+  const { groupId, personId, userData = '', base64, file } = req.body
+  let data
+  if (base64) {
+    console.log('got base64 face')
+    data = parseBase64(data)
+  }
+
+  if (file) {
+    // TODO: process files to data
+  }
+  api.createFace(groupId, personId, { data, userData })
+    .then(response => {
+      res.json(response)
     })
 })
 

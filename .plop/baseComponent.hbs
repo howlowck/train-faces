@@ -3,10 +3,6 @@ import { classNames } from 'support/helpers'
 import styles from './{{ properCase name}}.scss'
 
 class {{ properCase name}} extends Component {
-  static propTypes = {
-    className: PropTypes.string
-  }
-
   render () {
     const { className } = this.props
 
@@ -16,6 +12,10 @@ class {{ properCase name}} extends Component {
       </div>
     )
   }
+}
+
+{{ properCase name }}.propTypes = {
+  className: PropTypes.string
 }
 
 export default {{ properCase name}}

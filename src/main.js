@@ -5,7 +5,6 @@ import AppContainer from './containers/AppContainer'
 // import { getAllGuests } from 'actions/guest'
 import { loadConfig } from 'actions/config'
 import { requestListPersonGroups } from 'actions/group'
-import { byteCount } from 'support/helpers'
 
 // ========================================================
 // Store Instantiation

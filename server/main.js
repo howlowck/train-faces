@@ -4,23 +4,89 @@ const debug = require('debug')('app:server')
 const webpack = require('webpack')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
-const { Client } = require('project-oxford')
 const compress = require('compression')
 const bodyParser = require('body-parser')
 const Container = require('./Container')
+const FakeRepo = require('./repositories/FakeRepo')
+const _ = require('lodash')
 
 const app = express()
 const container = new Container()
 
-container.register('faceClient', (apiKey) => {
-  return new Client(apiKey)
-}, true)
+// container.register('faceApiRepo', (apiKey) => new FaceApiRepo(apiKey), true)
+container.register('faceApi', () => new FakeRepo(), true)
 
 // Apply gzip compression
 app.use(compress())
 
 app.use(bodyParser.json())
 
+const getKeys = (req) => {
+  const faceApiKey = req.get('COG-SERVICES-FACEAPI-KEY')
+  return {
+    faceApiKey
+  }
+}
+
+const faceApiMiddleware = (req, res, next) => {
+  const { faceApiKey } = getKeys(req)
+  req.faceApi = container.get('faceApi', faceApiKey)
+  next()
+}
+
+app.use(faceApiMiddleware)
+
+app.get('/person-groups', (req, res) => {
+  const api = req.faceApi
+  api.getPersonGroups().then((data) => {
+    console.log(data)
+    res.json(data)
+  })
+})
+
+app.post('/person-groups', (req, res) => {
+  console.log('in the post method', req.body.name)
+  const api = req.faceApi
+  const { name, userData = '' } = req.body
+  const groupId = _.snakeCase(name)
+  api.createPersonGroup(groupId, { name, userData })
+    .then((data) => {
+      res.json(data)
+    })
+})
+
+app.get('/persons', (req, res) => {
+  console.log('in the get method all persons')
+  const api = req.faceApi
+  const groupId = req.query['group_id']
+  api.getPersons(groupId).then((data) => {
+    res.json(data)
+  })
+})
+
+app.post('/persons', (req, res) => {
+  const api = req.faceApi
+  const { groupId, name, userData = '' } = req.body
+  api.createPerson(groupId, { name, userData })
+    .then(data => {
+      res.json(data)
+    })
+})
+
+app.post('/face', (req, res) => {
+  const api = req.faceApi
+  const { groupId, personId, userData = '' } = req.body
+  api.createFace(groupId, personId, { userData })
+    .then(data => {
+      res.json(data)
+    })
+})
+
+app.get('/face', (req, res) => {
+  const api = req.faceApi
+  const { group_id: groupId, person_id: personId, face_id: faceId } = req.query
+  api.getFace(groupId, personId, faceId).then(data => res.json(data))
+})
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
@@ -67,18 +133,5 @@ if (project.env === 'development') {
   // server in production.
   app.use(express.static(project.paths.dist()))
 }
-
-app.get('/person-groups', (req, res) => {
-  const faceKey = req.get('COG-FACE-KEY')
-  const client = container.get('faceClient', [faceKey])
-  client.face.personGroup.list()
-    .then((response) => {
-      res.json(response)
-    })
-})
-
-app.post('/person-groups', (req, res) => {
-
-})
 
 module.exports = app

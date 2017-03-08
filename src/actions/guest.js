@@ -33,7 +33,6 @@ export const getAllGuests = () => (dispatch) => {
       return res.json()
     })
     .then((data) => {
-      console.log(data)
       dispatch(receiveAllGuests(data))
     })
 }

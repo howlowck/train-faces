@@ -3,6 +3,13 @@ function Container () {
   this.singleton = {}
   this.lookup = {}
 }
+Container.prototype.add = function (abstractName, object) {
+  this.lookup[abstractName] = {
+    callback: null,
+    singleton: true,
+    instance: object
+  }
+}
 
 Container.prototype.register = function (abstractName, callback, singleton = false) {
   this.lookup[abstractName] = {

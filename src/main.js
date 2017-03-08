@@ -4,6 +4,8 @@ import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
 // import { getAllGuests } from 'actions/guest'
 import { loadConfig } from 'actions/config'
+import { requestListPersonGroups } from 'actions/group'
+import { byteCount } from 'support/helpers'
 
 // ========================================================
 // Store Instantiation
@@ -26,10 +28,13 @@ let render = () => {
   // Kickoff some API calls
   // store.dispatch(getAllGuests())
   store.dispatch(loadConfig())
+  store.dispatch(requestListPersonGroups())
 }
 
 // This code is excluded from production bundle
 if (__DEV__) {
+  window.__redux_store = store
+
   if (module.hot) {
     // Development render functions
     const renderApp = render

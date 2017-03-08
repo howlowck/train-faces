@@ -16,9 +16,9 @@ class PersonGroupsPage extends Component {
     return (
       <div className={classNames([styles.base, className])}>
         {groups.map((group) => (
-          <Link to={`person-groups/${group.name}`} key={`${group.name}-link`}>{group.name}</Link>
+          <Link to={`person-groups/${group.personGroupId}`} key={`${group.personGroupId}-link`}>{group.name}</Link>
         ))}
-        <Link>New</Link>
+        <Link to={`person-groups/_create`}>New</Link>
         {children}
       </div>
     )

@@ -981,7 +981,7 @@ babel-register@^6.18.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@6.x, babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.6.1, babel-runtime@^6.9.0, babel-runtime@^6.9.1:
+babel-runtime@6.x, babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.6.1, babel-runtime@^6.9.0, babel-runtime@^6.9.1:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.18.0.tgz#0f4177ffd98492ef13b9f823e9994a02584c9078"
   dependencies:
@@ -2997,6 +2997,14 @@ he@1.1.x:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.0.tgz#29319d49beec13a9b1f3c4f9b2a6dde4859bb2a7"
 
+highlight.js@~9.8.0:
+  version "9.8.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.8.0.tgz#38eeef40cd45eaddbec8c9e5238fb7a783a3b685"
+
+highlight.js@~9.9.0:
+  version "9.9.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.9.0.tgz#b9995dcfdc2773e307a34f0460d92b9a474782c0"
+
 history@^3.0.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/history/-/history-3.2.1.tgz#71c7497f4e6090363d19a6713bb52a1bfcdd99aa"
@@ -4097,6 +4105,12 @@ lower-case@^1.1.0, lower-case@^1.1.1, lower-case@^1.1.2:
 lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
+
+lowlight@^1.5.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/lowlight/-/lowlight-1.6.0.tgz#92f61e31e09ae9e971e70cabdd9e8f219f025232"
+  dependencies:
+    highlight.js "~9.9.0"
 
 lru-cache@2.2.x:
   version "2.2.4"
@@ -5649,6 +5663,14 @@ react-slick@~0.14.2:
     object-assign "^4.1.0"
     react-responsive-mixin "^0.4.0"
     slick-carousel "^1.6.0"
+
+react-syntax-highlighter@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-5.0.0.tgz#571c3418cc87b6e46839def297df74051b778571"
+  dependencies:
+    babel-runtime "^6.18.0"
+    highlight.js "~9.8.0"
+    lowlight "^1.5.0"
 
 react@^15.0.0:
   version "15.4.1"

@@ -30,7 +30,9 @@ class GroupPage extends Component {
               <Link to={`person-groups/${params.groupId}/_create-person`}><Icon type='plus' />Create Person</Link>
             </Item>
             {persons.map((person) => (
-              <Item key={`${person.personId}`}><Link>{person.name}</Link></Item>
+              <Item key={`${person.personId}`}>
+                <Link to={`person-groups/${params.groupId}/${person.personId}`}>{person.name}</Link>
+              </Item>
           ))}
 
           </Menu>

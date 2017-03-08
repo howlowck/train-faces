@@ -45,17 +45,16 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     onSubmit: (event) => {
       event.preventDefault()
       const processedUserData = userData === '' ? userData : JSON.parse(userData)
-      // let newPersonId
+      let newPersonId
       dispatch(createPerson(groupId, name, processedUserData))
       .then((personId) => {
-        // newPersonId = personId
+        newPersonId = personId
         return dispatch(requestListPersons(groupId))
       }).then((personsList) => {
         dispatch(setPersons(groupId, personsList))
       }).then(() => {
-        router.push(`/person-groups/${groupId}`)
         // TODO: redirect to the newly created Person
-        // router.push(`/person-groups/${groupId}/${newPersonId}`)
+        router.push(`/person-groups/${groupId}/${newPersonId}`)
       })
     }
   }

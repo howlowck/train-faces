@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { classNames, isJsonString } from 'support/helpers'
+import { classNames, isJsonString, byteCount } from 'support/helpers'
 import { Input, Button } from 'antd'
 import styles from './CreatePersonPage.scss'
 import JsonInput from 'components/forms/JsonInput'
@@ -16,7 +16,8 @@ class CreatePersonPage extends Component {
 
   render () {
     const { className, name = '', userData, onSubmit, onNameChange, onUserDataChange } = this.props
-    let validRequest = (name !== '') && (isJsonString(userData) || userData === '')
+    const maxBytes = 1000
+    let validRequest = (name !== '') && (isJsonString(userData) || userData === '') && (byteCount(userData) <= maxBytes)
 
     return (
       <div className={classNames([styles.base, className])}>
@@ -24,7 +25,7 @@ class CreatePersonPage extends Component {
         <form onSubmit={onSubmit}>
           <label htmlFor='person-name'>Name</label>
           <Input id='person-name' name='person-name' onChange={onNameChange} value={name} />
-          <JsonInput onChange={onUserDataChange} label='User Data' content={userData} />
+          <JsonInput onChange={onUserDataChange} label='User Data' content={userData} maxBytes={maxBytes} />
           <Button htmlType='submit' type='primary' disabled={!validRequest}> Add a Person </Button>
         </form>
       </div>

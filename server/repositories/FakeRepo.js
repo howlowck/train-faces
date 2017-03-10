@@ -26,7 +26,6 @@ const uuid = require('uuid/v1')
 // }
 
 class FakeRepo {
-
   constructor (apiKey) {
     this.personGroups = [{
       personGroupId: 'test_group',
@@ -37,26 +36,21 @@ class FakeRepo {
     this.faces = new Map()
   }
 
-  getPersonGroups () {
-    const personGroups = this.personGroups
-    return new Promise((resolve, reject) => resolve(personGroups))
-  }
-
-  getPersons (personGroupId) {
-    const personsArray = this.persons.has(personGroupId) ? this.persons.get(personGroupId) : null
-    return new Promise((resolve, reject) => resolve(personsArray))
-  }
-
-  getFace (personGroupId, personId, faceId) {
-    const faceObj = this.faces.has(faceId) ? this.faces.get(faceId) : null
-    return new Promise((resolve, reject) => resolve(faceObj))
-  }
-
   createPersonGroup (groupId, { name, userData = '' }) {
     if (!this.personGroups.find((group) => group.personGroupId === groupId)) {
       this.personGroups.push({ personGroupId: groupId, name, userData })
     }
 
+    return new Promise((resolve, reject) => resolve({}))
+  }
+
+  getPersonGroups () {
+    const personGroups = this.personGroups
+    return new Promise((resolve, reject) => resolve(personGroups))
+  }
+
+  deletePersonGroup (personGroupId) {
+    this.personGroups = this.personGroups.filter((group) => group.personGroupId !== personGroupId)
     return new Promise((resolve, reject) => resolve({}))
   }
 
@@ -66,6 +60,17 @@ class FakeRepo {
     personsArray.push({ personId, name, userData, persistedFaceIds: [] })
     this.persons.set(personGroupId, personsArray)
     return new Promise((resolve, reject) => resolve({ personId }))
+  }
+
+  getPersons (personGroupId) {
+    const personsArray = this.persons.has(personGroupId) ? this.persons.get(personGroupId) : null
+    return new Promise((resolve, reject) => resolve(personsArray))
+  }
+
+  deletePerson (personGroupId, personId) {
+    const newPersonsArray = this.persons.get(personGroupId).filter((person) => person.personId !== personId)
+    this.persons.set(personGroupId, newPersonsArray)
+    return new Promise((resolve, reject) => resolve({}))
   }
 
   createFace (personGroupId, personId, { data, userData = '' }) {
@@ -83,6 +88,20 @@ class FakeRepo {
     return new Promise((resolve, reject) => resolve({ persistedFaceId: newFaceId }))
   }
 
+  getFace (personGroupId, personId, faceId) {
+    const faceObj = this.faces.has(faceId) ? this.faces.get(faceId) : null
+    return new Promise((resolve, reject) => resolve(faceObj))
+  }
+
+  deleteFace (personGroupId, personId, faceId) {
+    this.faces.delete(faceId)
+    const person = this.persons.get(personGroupId).find(person => person.personId === personId)
+    if (person) {
+      const newPersistedFaceIds = person.persistedFaceIds.filter(id => id !== faceId)
+      person.persistedFaceIds = newPersistedFaceIds
+    }
+    return new Promise((resolve, reject) => resolve({}))
+  }
 }
 
 module.exports = FakeRepo

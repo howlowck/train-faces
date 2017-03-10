@@ -66,6 +66,15 @@ app.post('/person-groups', (req, res) => {
     })
 })
 
+app.delete('/person-groups', (req, res) => {
+  const api = req.faceApi
+  const { groupId } = req.body
+  api.deletePersonGroup(groupId)
+    .then((data) => {
+      res.json(data)
+    })
+})
+
 app.get('/persons', (req, res) => {
   console.log('in the get method all persons')
   const api = req.faceApi
@@ -80,6 +89,15 @@ app.post('/persons', (req, res) => {
   const { groupId, name, userData = '' } = req.body
   api.createPerson(groupId, { name, userData })
     .then(data => {
+      res.json(data)
+    })
+})
+
+app.delete('/persons', (req, res) => {
+  const api = req.faceApi
+  const { groupId, personId } = req.body
+  api.deletePerson(groupId, personId)
+    .then((data) => {
       res.json(data)
     })
 })
@@ -107,6 +125,16 @@ app.get('/face', (req, res) => {
   const { group_id: groupId, person_id: personId, face_id: faceId } = req.query
   api.getFace(groupId, personId, faceId).then(data => res.json(data))
 })
+
+app.delete('/face', (req, res) => {
+  const api = req.faceApi
+  const { groupId, personId, faceId } = req.body
+  api.deleteFace(groupId, personId, faceId)
+    .then((data) => {
+      res.json(data)
+    })
+})
+
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------

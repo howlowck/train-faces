@@ -1,5 +1,7 @@
 .base {
-
+  position:relative;
+  flex-direction: column;
+  max-width: 1200px;
 }
 
 .video {
@@ -7,5 +9,12 @@
 }
 
 .canvas {
+}
 
+.captureButton{
+  text-align: center;
+  position:absolute;
+  left: 50%;
+  margin-left: -16px;
+  bottom: 10px;
 }

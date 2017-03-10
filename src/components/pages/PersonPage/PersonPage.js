@@ -4,12 +4,11 @@ import styles from './PersonPage.scss'
 import JSONTree from 'react-json-tree'
 import themes from 'constants/uiThemes'
 import OpenModal from 'components/core/OpenModal'
-import WebcamInput from 'components/forms/WebcamInput'
-import { Modal } from 'antd'
+import NewFaceWebcamModal from 'components/content/NewFaceWebcamModal'
 
 class PersonPage extends Component {
   render () {
-    const { className, person, onAddWithWebcamClick } = this.props
+    const { className, person, onCaptureWebcamClick, capturedImage, onModalClose } = this.props
     const { userData } = person
     const userDataEl = userData ? <JSONTree data={userData} theme={themes.jsonTreeTheme} /> : <p> Empty User Data</p>
     return (
@@ -18,10 +17,8 @@ class PersonPage extends Component {
         <p> User Data: </p>
         {userDataEl}
         <h5>Faces</h5>
-        <OpenModal buttonText='Add with Webcam'>
-          <Modal title='Add with Webcam'>
-            <WebcamInput actionLabel='Add Face' onActionClick={onAddWithWebcamClick} />
-          </Modal>
+        <OpenModal name='newFaceWebcamModal' buttonText='Add with Webcam' onModalClose={onModalClose}>
+          <NewFaceWebcamModal onCaptureClick={onCaptureWebcamClick} capturedImage={capturedImage} />
         </OpenModal>
       </div>
     )
@@ -31,7 +28,8 @@ class PersonPage extends Component {
 PersonPage.propTypes = {
   className: PropTypes.string,
   person: PropTypes.object,
-  onAddWithWebcamClick: PropTypes.func
+  onCaptureWebcamClick: PropTypes.func,
+  capturedImage: PropTypes.string,
+  onModalClose: PropTypes.func
 }
-
 export default PersonPage

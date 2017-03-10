@@ -4,7 +4,7 @@ import OpenModal from './OpenModal'
 import uid from 'uid'
 
 const mapStateToProps = (state, prevProps) => {
-  const visibleState = state.ui[prevProps.uid] ? state.ui[prevProps.uid] : { visible: false }
+  const visibleState = state.ui[prevProps.name] ? state.ui[prevProps.name] : { visible: false }
 
   return {
     modalVisible: visibleState.visible
@@ -13,11 +13,14 @@ const mapStateToProps = (state, prevProps) => {
 
 const mapDispatchToProps = (dispatch, prevProps) => ({
   openFunc: (event) => {
-    console.log(prevProps)
-    dispatch(openModal(prevProps.uid))
+    dispatch(openModal(prevProps.name))
   },
   closeModal: (event) => {
-    dispatch(closeModal(prevProps.uid))
+    dispatch(closeModal(prevProps.name))
+    const { onModalClose } = prevProps
+    if (onModalClose) {
+      onModalClose()
+    }
   }
 })
 

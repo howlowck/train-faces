@@ -3,7 +3,7 @@
 import React, { Component, PropTypes } from 'react'
 import { classNames } from 'support/helpers'
 import styles from './WebcamInput.scss'
-import { Button } from 'antd'
+import { Button, Icon } from 'antd'
 
 class WebcamInput extends Component {
   onSuccessGetMedia (stream) {
@@ -24,27 +24,44 @@ class WebcamInput extends Component {
     return this.canvasEl.toDataURL('image/png')
   }
 
-  componentDidMount () {
-    navigator.getUserMedia({ video: true, audio: false }, this.onSuccessGetMedia.bind(this), () => {})
+  startStream () {
+    if (!this.stream) {
+      navigator.getUserMedia({ video: true, audio: false }, this.onSuccessGetMedia.bind(this), () => {})
+    }
+  }
+  endStream () {
+    if (this.stream) {
+      this.stream.getVideoTracks()[0].stop()
+      delete this.stream
+    }
   }
 
+  // componentDidMount () {
+  //   this.startStream()
+  // }
+
   componentWillUnmount () {
-    if (this.stream) {
-      this.stream.getTracks().forEach(function (track) {
-        track.stop()
-      })
-    }
+    this.endStream()
   }
 
   render () {
-    const { className, width, height, actionLabel, onActionClick } = this.props
+    const { className, width, height, onCaptureClick, enabled, viewWidth, viewHeight } = this.props
     const onButtonClick = (event) => {
       event.preventDefault()
-      onActionClick(this.getBase64())
+      onCaptureClick(this.getBase64())
+    }
+    if (!enabled) {
+      this.endStream()
+    } else {
+      this.startStream()
     }
 
     return (
-      <div className={classNames([styles.base, className])}>
+      <div
+        style={{
+          width: viewWidth
+        }}
+        className={classNames([styles.base, className])}>
         <video
           className={styles.video}
           ref={(video) => { this.videoEl = video }}
@@ -56,8 +73,18 @@ class WebcamInput extends Component {
           className={styles.canvas}
           ref={(canvas) => { this.canvasEl = canvas }}
           width={width}
-          height={height} />
-        <Button type='primary' onClick={onButtonClick}>{actionLabel}</Button>
+          height={height}
+          style={{
+            width: viewWidth,
+            height: viewHeight
+          }}
+          />
+        <Button type='primary'
+          className={styles.captureButton}
+          onClick={onButtonClick}
+          shape='circle'
+          size='large'
+          icon='camera-o' />
       </div>
     )
   }
@@ -67,15 +94,21 @@ WebcamInput.propTypes = {
   className: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
-  actionLabel: PropTypes.string,
-  onActionClick: PropTypes.func
+  viewWidth: PropTypes.number,
+  viewHeight: PropTypes.number,
+  captureLabel: PropTypes.string,
+  onCaptureClick: PropTypes.func,
+  enabled: PropTypes.bool
 }
 
 WebcamInput.defaultProps = {
   width: 480,
   height: 360,
-  actionLabel: 'Action',
-  onActionClick: (data) => {}
+  captureLabel: 'Action',
+  onCaptureClick: (data) => {},
+  enabled: false,
+  viewWidth: 480,
+  viewHeight: 360
 }
 
 export default WebcamInput

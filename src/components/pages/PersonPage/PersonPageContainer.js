@@ -1,15 +1,18 @@
 import { connect } from 'react-redux'
 import PersonPage from './PersonPage'
-import { uploadBase64Face } from 'actions/face'
+import { inputChangeNewFaceImage } from 'actions/webcam'
 
 const mapStateToProps = (state, { params }) => ({
-  person: state.persons[params.groupId].find((person) => person.personId === params.personId)
+  person: state.persons[params.groupId].find((person) => person.personId === params.personId),
+  capturedImage: state.inputs.new_face_image ? state.inputs.new_face_image.value : ''
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onAddWithWebcamClick: (data) => {
-    const { groupId, personId } = ownProps.params
-    dispatch(uploadBase64Face(groupId, personId, data))
+  onCaptureWebcamClick: (data) => {
+    dispatch(inputChangeNewFaceImage(data))
+  },
+  onModalClose: () => {
+    dispatch(inputChangeNewFaceImage(null))
   }
 })
 

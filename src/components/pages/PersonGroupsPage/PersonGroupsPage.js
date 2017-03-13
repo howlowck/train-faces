@@ -11,9 +11,19 @@ class PersonGroupsPage extends Component {
       <div className={classNames([styles.base, className])}>
         <ul className={styles.menu}>
           {groups.map((group) => (
-            <Link to={`person-groups/${group.personGroupId}`} className={styles.menuItem} key={`${group.personGroupId}-link`}>{group.name}</Link>
+            <Link to={`person-groups/${group.personGroupId}`}
+              className={styles.item}
+              key={`${group.personGroupId}-link`}
+              activeClassName={styles.selectedItem}
+              >
+              {group.name}
+            </Link>
           ))}
-          <Link to={`person-groups/_create`} className={styles.createGroup}>Create a Person Group</Link>
+          <Link to={`person-groups/_create`}
+            activeClassName={styles.selectedItem}
+            className={styles.createGroup}>
+            Create a Person Group
+          </Link>
         </ul>
 
         {children}

@@ -1,3 +1,5 @@
-.base {
+@import '~styles/base';
 
+.base {
+  padding: $pagePadding;
 }

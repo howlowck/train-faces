@@ -1,3 +1,23 @@
 .base {
 
 }
+
+$menuHeight: 40px;
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  height: $menuHeight;
+  align-items: stretch;
+  background-color: teal;
+  padding: 0 10px;
+}
+
+.menuItem {
+  line-height: $menuHeight;
+  padding: 0 10px;
+}
+
+.createGroup {
+  @extend .menuItem;
+}

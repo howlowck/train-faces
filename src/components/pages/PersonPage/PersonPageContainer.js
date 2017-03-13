@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import PersonPage from './PersonPage'
 import { inputChangeNewFaceImage } from 'actions/webcam'
+import { deletePerson } from 'actions/person'
 
 const mapStateToProps = (state, { params }) => ({
   person: state.persons[params.groupId].find((person) => person.personId === params.personId),
@@ -13,6 +14,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   onModalClose: () => {
     dispatch(inputChangeNewFaceImage(null))
+  },
+  onDeletePerson: () => {
+    const { groupId, personId } = ownProps.params
+    const { router } = ownProps
+    dispatch(deletePerson(groupId, personId))
+    router.push(`person-groups/${groupId}`)
   }
 })
 

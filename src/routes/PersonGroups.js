@@ -3,6 +3,8 @@ import GroupPage from 'components/pages/GroupPage'
 import CreateGroupPage from 'components/pages/CreateGroupPage'
 import CreatePersonPage from 'components/pages/CreatePersonPage'
 import PersonPage from 'components/pages/PersonPage'
+import PersonGroupsIndexPage from 'components/pages/PersonGroupsIndexPage'
+import GroupIndexPage from 'components/pages/GroupIndexPage'
 import { requestListPersons, setPersons } from 'actions/person'
 
 const personFound = (persons, personId) => {
@@ -16,6 +18,9 @@ export default (store) => {
   return {
     path: 'person-groups',
     component: PersonGroupsPage,
+    indexRoute: {
+      component: PersonGroupsIndexPage
+    },
     childRoutes: [
       {
         path: '_create',
@@ -24,6 +29,9 @@ export default (store) => {
       {
         path: ':groupId',
         component: GroupPage,
+        indexRoute: {
+          component: GroupIndexPage
+        },
         onEnter: (props) => {
           const { dispatch } = store
           const { params } = props
@@ -54,8 +62,8 @@ export default (store) => {
                     if (personFound(personsList, personId)) {
                       cb(null, PersonPage)
                     }
-
-                    cb('user Not found')
+                    // TODO: implement a Not Found Page
+                    cb('user Not Found')
                   })
               }
             }

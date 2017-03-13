@@ -1,7 +1,10 @@
+/* global fetch */
+
 export const SET_PERSONS = 'SET_PERSONS'
 export const REQUEST_LIST_PERSONS = 'REQUEST_LIST_PERSONS'
 export const INPUT_CHANGE_NEW_PERSON_NAME = 'INPUT_CHANGE_NEW_PERSON_NAME'
 export const INPUT_CHANGE_NEW_PERSON_USER_DATA = 'INPUT_CHANGE_NEW_PERSON_USER_DATA'
+export const DELETE_PERSON = 'DELETE_PERSON'
 // Add Action String Constant Here (do not delete this line)
 
 export const setPersons = (groupId, data) => {
@@ -44,5 +47,24 @@ export const inputChangeNewPersonUserData = (nested, data) => ({
   nested,
   data
 })
+
+export const deletePerson = (groupId, personId) => (dispatch) => {
+  return fetch('/persons', {
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      groupId,
+      personId
+    })
+  })
+  .then(res => res.json())
+  .then(() => {
+    return dispatch(requestListPersons(groupId))
+  }).then((data) => {
+    return dispatch(setPersons(groupId, data))
+  })
+}
 
 // Add Action Creator Here (do not delete this line)

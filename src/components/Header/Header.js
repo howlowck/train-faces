@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link, IndexLink } from 'react-router'
 import { Menu, Layout } from 'antd'
-const { Header } = Layout
 import styles from './Header.scss'
+const { Header } = Layout
+const { Item } = Menu
 
 export const MyHeader = () => (
   <Header>
@@ -13,9 +14,15 @@ export const MyHeader = () => (
       defaultSelectedKeys={['1']}
       style={{ lineHeight: '64px', display: 'inline' }}
     >
-      <Menu.Item key='1'><IndexLink to='/' activeClassName={styles.active}>Home</IndexLink></Menu.Item>
-      <Menu.Item key='2'><Link to='person-groups' activeClassName={styles.active}>PersonGroup</Link></Menu.Item>
-      <Menu.Item key='3'><Link to='config' activeClassName={styles.active}>Configure</Link></Menu.Item>
+      <Item className={styles.liOverwrite} key='1'>
+        <IndexLink to='/' className={styles.link} activeClassName={styles.active}>Home</IndexLink>
+      </Item>
+      <Item className={styles.liOverwrite} key='2'>
+        <Link to='person-groups' className={styles.link} activeClassName={styles.active}>Manage</Link>
+      </Item>
+      <Item className={styles.liOverwrite} key='3'>
+        <Link to='config' className={styles.link} activeClassName={styles.active}>Configure</Link>
+      </Item>
     </Menu>
   </Header>
   // <div className={styles.base}>

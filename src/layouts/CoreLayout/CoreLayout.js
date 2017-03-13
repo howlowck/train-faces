@@ -9,7 +9,7 @@ export const CoreLayout = ({ children }) => (
   <Layout className='layout'>
     <Header />
     <Content style={{ padding: '0 50px' }}>
-      <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>{children}</div>
+      <div style={{ background: '#fff', padding: 0, minHeight: 280 }}>{children}</div>
     </Content>
     <Footer style={{ textAlign: 'center' }}>
        Created by Hao Luo

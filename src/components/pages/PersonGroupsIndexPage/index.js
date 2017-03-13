@@ -1,0 +1,3 @@
+import PersonGroupsIndexPageContainer from './PersonGroupsIndexPageContainer'
+
+export default PersonGroupsIndexPageContainer

@@ -5,6 +5,7 @@ export const CREATE_PERSON_GROUP = 'CREATE_PERSON_GROUP'
 export const REQUEST_LIST_PERSON_GROUPS = 'REQUEST_LIST_PERSON_GROUPS'
 export const SET_PERSON_GROUPS = 'SET_PERSON_GROUPS'
 export const INPUT_CHANGE_NEW_GROUP_NAME = 'INPUT_CHANGE_NEW_GROUP_NAME'
+export const DELETE_GROUP = 'DELETE_GROUP'
 // Add Action String Constant Here (do not delete this line)
 
 export const createPersonGroup = () => (dispatch, getState) => {
@@ -50,4 +51,21 @@ export const inputChangeNewGroupName = (data) => ({
   data
 })
 
+export const deleteGroup = (groupId) => (dispatch) => {
+  return fetch('/person-groups', {
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      groupId
+    })
+  })
+  .then(res => res.json())
+  .then(() => {
+    return dispatch(requestListPersonGroups(groupId))
+  }).then((data) => {
+    return dispatch(setPersonGroups(data))
+  })
+}
 // Add Action Creator Here (do not delete this line)

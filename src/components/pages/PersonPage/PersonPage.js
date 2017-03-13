@@ -5,15 +5,17 @@ import JSONTree from 'react-json-tree'
 import themes from 'constants/uiThemes'
 import OpenModal from 'components/core/OpenModal'
 import NewFaceWebcamModal from 'components/content/NewFaceWebcamModal'
+import { Button } from 'antd'
 
 class PersonPage extends Component {
   render () {
-    const { className, person, onCaptureWebcamClick, capturedImage, onModalClose } = this.props
+    const { className, person, onCaptureWebcamClick, capturedImage, onModalClose, onDeletePerson } = this.props
     const { userData } = person
     const userDataEl = userData ? <JSONTree data={userData} theme={themes.jsonTreeTheme} /> : <p> Empty User Data</p>
     return (
       <div className={classNames([styles.base, className])}>
         <h4>Name: {person.name} </h4>
+        <Button onClick={onDeletePerson} type='danger'>Delete Person</Button>
         <p> User Data: </p>
         {userDataEl}
         <h5>Faces</h5>
@@ -30,6 +32,7 @@ PersonPage.propTypes = {
   person: PropTypes.object,
   onCaptureWebcamClick: PropTypes.func,
   capturedImage: PropTypes.string,
-  onModalClose: PropTypes.func
+  onModalClose: PropTypes.func,
+  onDeletePerson: PropTypes.func
 }
 export default PersonPage

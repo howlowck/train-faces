@@ -1,15 +1,25 @@
 .base {
   width: 100%;
-  background: teal;
+  // background: teal;
 }
 .title {
   padding: 0;
   margin: 0;
   color: white;
-  background-color: teal;
+  // background-color: teal;
   padding: 0 20px;
   float:left;
 }
+
 .active {
-  font-weight: bold;
+  background-color: teal;
+}
+
+.link {
+  padding: 0 20px;
+}
+
+.liOverwrite{
+  padding: 0;
+  margin-top: 0 !important; //To fix antd style glitch
 }

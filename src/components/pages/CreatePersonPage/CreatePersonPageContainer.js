@@ -25,8 +25,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(inputChangeNewPersonName(groupId, event.target.value))
     },
 
-    onUserDataChange: (event) => {
-      dispatch(inputChangeNewPersonUserData(groupId, event.target.value))
+    onUserDataChange: (value) => {
+      dispatch(inputChangeNewPersonUserData(groupId, value))
     },
     dispatch
   }

@@ -18,12 +18,12 @@ class GroupPage extends Component {
         <h3>Group Page - {params.groupId}</h3>
         <Button type='danger' onClick={onDeleteGroup}>Delete Group</Button>
         <div className={styles.persons}>
-          <Menu mode='vertical' className={styles.menu}>
-            <Item>
+          <Menu mode='vertical' className={styles.menu} selectedKeys={[params.personId]}>
+            <Item key='_create'>
               <Link to={`person-groups/${params.groupId}/_create-person`}><Icon type='plus' />Create Person</Link>
             </Item>
             {persons.map((person) => (
-              <Item key={`${person.personId}`}>
+              <Item key={person.personId}>
                 <Link to={`person-groups/${params.groupId}/${person.personId}`}>{person.name}</Link>
               </Item>
           ))}

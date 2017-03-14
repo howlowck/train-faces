@@ -1,3 +1,4 @@
+/* global __PROD__ */
 const express = require('express')
 const debug = require('debug')('app:server')
 // const path = require('path')
@@ -8,11 +9,23 @@ const compress = require('compression')
 const bodyParser = require('body-parser')
 const Container = require('./Container')
 const FakeRepo = require('./repositories/FakeRepo')
+const FaceApiRepo = require('./repositories/FaceApiRepo')
 const _ = require('lodash')
 
+// ------------------------------------
+// Environment Variables
+// ------------------------------------
+const { __PROD__ = false } = process.env
+
+// ------------------------------------
+// Essential Initializations
+// ------------------------------------
 const app = express()
 const container = new Container()
 
+// ------------------------------------
+// Define helper functions
+// ------------------------------------
 const parseBase64 = (base64) => {
   var match = /data:([^;]+);base64,(.*)/.exec(base64)
   if (!match) {
@@ -24,13 +37,6 @@ const parseBase64 = (base64) => {
     data: new Buffer(match[2], 'base64')
   }
 }
-// container.register('faceApiRepo', (apiKey) => new FaceApiRepo(apiKey), true)
-container.register('faceApi', () => new FakeRepo(), true)
-
-// Apply gzip compression
-app.use(compress())
-
-app.use(bodyParser.json({ limit: '5mb' }))
 
 const getKeys = (req) => {
   const faceApiKey = req.get('COG-SERVICES-FACEAPI-KEY')
@@ -39,13 +45,33 @@ const getKeys = (req) => {
   }
 }
 
+// ------------------------------------
+// IoC Container Registration
+// ------------------------------------
+container.register('faceApi', (apiKey) => new FakeRepo(apiKey), true) // Fake
+if (__PROD__) {
+  container.register('faceApi', (apiKey) => new FaceApiRepo(apiKey)) // Overwrite faceApi with real API if in Prod
+}
+// ------------------------------------
+// Define Custom Middlewares
+// ------------------------------------
 const faceApiMiddleware = (req, res, next) => {
   const { faceApiKey } = getKeys(req)
-  req.faceApi = container.get('faceApi', faceApiKey)
+  req.faceApi = container.get('faceApi', [faceApiKey])
   next()
 }
 
+// ------------------------------------
+// Utilize custom Middlewares
+// ------------------------------------
 app.use(faceApiMiddleware)
+app.use(bodyParser.json({ limit: '5mb' }))
+// Apply gzip compression
+app.use(compress())
+
+// ------------------------------------
+// Route Definition
+// ------------------------------------
 
 app.get('/person-groups', (req, res) => {
   const api = req.faceApi

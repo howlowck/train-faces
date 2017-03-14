@@ -1,5 +1,5 @@
 /* global fetch */
-
+import { getApiHeaders } from 'support/helpers'
 export const SET_PERSONS = 'SET_PERSONS'
 export const REQUEST_LIST_PERSONS = 'REQUEST_LIST_PERSONS'
 export const INPUT_CHANGE_NEW_PERSON_NAME = 'INPUT_CHANGE_NEW_PERSON_NAME'
@@ -17,12 +17,10 @@ export const setPersons = (groupId, data) => {
   }
 }
 
-export const createPerson = (groupId, name, userData) => (dispatch) => {
+export const createPerson = (groupId, name, userData) => (dispatch, getState) => {
   return fetch('/persons', {
     method: 'post',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: getApiHeaders(getState()),
     body: JSON.stringify({
       groupId,
       name,
@@ -33,8 +31,10 @@ export const createPerson = (groupId, name, userData) => (dispatch) => {
   .then(data => data.personId)
 }
 
-export const requestListPersons = (groupId) => (dispatch) => {
-  return fetch(`/persons?group_id=${groupId}`)
+export const requestListPersons = (groupId) => (dispatch, getState) => {
+  return fetch(`/persons?group_id=${groupId}`, {
+    headers: getApiHeaders(getState())
+  })
     .then(res => res.json())
 }
 
@@ -50,12 +50,10 @@ export const inputChangeNewPersonUserData = (nested, data) => ({
   data
 })
 
-export const deletePerson = (groupId, personId) => (dispatch) => {
+export const deletePerson = (groupId, personId) => (dispatch, getState) => {
   return fetch('/persons', {
     method: 'delete',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: getApiHeaders(getState()),
     body: JSON.stringify({
       groupId,
       personId
@@ -69,8 +67,10 @@ export const deletePerson = (groupId, personId) => (dispatch) => {
   })
 }
 
-export const requestGetPerson = (groupId, personId) => (dispatch) => {
-  return fetch(`/persons/${personId}?group_id=${groupId}`)
+export const requestGetPerson = (groupId, personId) => (dispatch, getState) => {
+  return fetch(`/persons/${personId}?group_id=${groupId}`, {
+    headers: getApiHeaders(getState())
+  })
     .then(res => res.json())
 }
 

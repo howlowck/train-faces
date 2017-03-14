@@ -39,7 +39,7 @@ const parseBase64 = (base64) => {
 }
 
 const getKeys = (req) => {
-  const faceApiKey = req.get('COG-SERVICES-FACEAPI-KEY')
+  const faceApiKey = req.get('Cog-Services-FaceApi-Key')
   return {
     faceApiKey
   }

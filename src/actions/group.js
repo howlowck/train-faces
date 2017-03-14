@@ -1,5 +1,6 @@
 /* global fetch */
 import { notification } from 'antd'
+import { getApiHeaders } from 'support/helpers'
 
 export const CREATE_PERSON_GROUP = 'CREATE_PERSON_GROUP'
 export const REQUEST_LIST_PERSON_GROUPS = 'REQUEST_LIST_PERSON_GROUPS'
@@ -20,9 +21,7 @@ export const createPersonGroup = () => (dispatch, getState) => {
 
   fetch('/person-groups', {
     method: 'post',
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8'
-    },
+    headers: getApiHeaders(getState()),
     body: JSON.stringify({
       name: newGroupName
     })
@@ -34,8 +33,10 @@ export const createPersonGroup = () => (dispatch, getState) => {
   })
 }
 
-export const requestListPersonGroups = () => (dispatch) => {
-  fetch('/person-groups').then(res => res.json())
+export const requestListPersonGroups = () => (dispatch, getState) => {
+  fetch('/person-groups', {
+    headers: getApiHeaders(getState())
+  }).then(res => res.json())
     .then(data => {
       dispatch(setPersonGroups(data))
     })
@@ -51,12 +52,10 @@ export const inputChangeNewGroupName = (data) => ({
   data
 })
 
-export const deleteGroup = (groupId) => (dispatch) => {
+export const deleteGroup = (groupId) => (dispatch, getState) => {
   return fetch('/person-groups', {
     method: 'delete',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: getApiHeaders(getState()),
     body: JSON.stringify({
       groupId
     })

@@ -1,17 +1,15 @@
 /* global fetch */
-
+import { getApiHeaders } from 'support/helpers'
 export const UPLOAD_BASE64_FACE = 'UPLOAD_BASE64_FACE'
 export const DELETE_FACE = 'DELETE_FACE'
 export const INPUT_CHANGE_NEW_FACE_USER_DATA = 'INPUT_CHANGE_NEW_FACE_USER_DATA'
 export const CREATE_FACE_WITH_DATA = 'CREATE_FACE_WITH_DATA'
 // Add Action String Constant Here (do not delete this line)
 
-export const deleteFace = (groupId, personId, faceId) => (dispatch) => {
+export const deleteFace = (groupId, personId, faceId) => (dispatch, getState) => {
   return fetch('/face', {
     method: 'delete',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: getApiHeaders(getState()),
     body: JSON.stringify({
       groupId,
       personId,
@@ -26,12 +24,10 @@ export const inputChangeNewFaceUserData = (data) => ({
   data
 })
 
-export const createFaceWithData = (groupId, personId, data, userData) => (dispatch) => {
+export const createFaceWithData = (groupId, personId, data, userData) => (dispatch, getState) => {
   return fetch('/face', {
     method: 'post',
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8'
-    },
+    headers: getApiHeaders(getState()),
     body: JSON.stringify({
       base64: data,
       groupId,

@@ -1,3 +1,5 @@
+/* global btoa */
+
 import { decode } from 'base64-arraybuffer'
 
 /**
@@ -49,4 +51,11 @@ export function isJsonString (str) {
 
 export function getShrug () {
   return '¯\\_(ツ)_/¯'
+}
+
+export function getApiHeaders (state) {
+  return {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Cog-Services-FaceApi-Key': state.config.FaceApiKey
+  }
 }

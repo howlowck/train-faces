@@ -5,6 +5,8 @@ export const REQUEST_LIST_PERSONS = 'REQUEST_LIST_PERSONS'
 export const INPUT_CHANGE_NEW_PERSON_NAME = 'INPUT_CHANGE_NEW_PERSON_NAME'
 export const INPUT_CHANGE_NEW_PERSON_USER_DATA = 'INPUT_CHANGE_NEW_PERSON_USER_DATA'
 export const DELETE_PERSON = 'DELETE_PERSON'
+export const REQUEST_GET_PERSON = 'REQUEST_GET_PERSON'
+export const SET_A_PERSON = 'SET_A_PERSON'
 // Add Action String Constant Here (do not delete this line)
 
 export const setPersons = (groupId, data) => {
@@ -66,5 +68,17 @@ export const deletePerson = (groupId, personId) => (dispatch) => {
     return dispatch(setPersons(groupId, data))
   })
 }
+
+export const requestGetPerson = (groupId, personId) => (dispatch) => {
+  return fetch(`/persons/${personId}?group_id=${groupId}`)
+    .then(res => res.json())
+}
+
+export const setAPerson = (groupId, personId, data) => ({
+  type: SET_A_PERSON,
+  groupId,
+  personId,
+  data
+})
 
 // Add Action Creator Here (do not delete this line)

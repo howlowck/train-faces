@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import pluralize from 'pluralize'
 import { classNames } from 'support/helpers'
 import styles from './PersonPage.scss'
 import JSONTree from 'react-json-tree'
@@ -9,8 +10,15 @@ import { Button } from 'antd'
 
 class PersonPage extends Component {
   render () {
-    const { className, person, onCaptureWebcamClick, capturedImage, onModalClose, onDeletePerson } = this.props
+    const { className, person,
+      onCaptureWebcamClick, capturedImage,
+      onModalClose, onDeletePerson,
+      newFaceUserData, onChangeUserData,
+      onCreateFaceSubmit
+    } = this.props
+
     const { userData } = person
+    const faceCount = person.persistedFaceIds.length
     const userDataEl = userData ? <JSONTree data={userData} theme={themes.jsonTreeTheme} /> : <p> Empty User Data</p>
     return (
       <div className={classNames([styles.base, className])}>
@@ -20,8 +28,15 @@ class PersonPage extends Component {
         {userDataEl}
         <h5>Faces</h5>
         <OpenModal name='newFaceWebcamModal' buttonText='Add with Webcam' onModalClose={onModalClose}>
-          <NewFaceWebcamModal onCaptureClick={onCaptureWebcamClick} capturedImage={capturedImage} />
+          <NewFaceWebcamModal
+            onCaptureClick={onCaptureWebcamClick}
+            capturedImage={capturedImage}
+            userData={newFaceUserData}
+            onChangeUserData={onChangeUserData}
+            onSubmit={onCreateFaceSubmit} />
         </OpenModal>
+
+        <p>You have {faceCount} {pluralize('face', faceCount)} registered for this person</p>
       </div>
     )
   }
@@ -33,6 +48,9 @@ PersonPage.propTypes = {
   onCaptureWebcamClick: PropTypes.func,
   capturedImage: PropTypes.string,
   onModalClose: PropTypes.func,
-  onDeletePerson: PropTypes.func
+  onDeletePerson: PropTypes.func,
+  newFaceUserData: PropTypes.string,
+  onChangeUserData: PropTypes.func,
+  onCreateFaceSubmit: PropTypes.func
 }
 export default PersonPage

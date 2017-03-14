@@ -12,7 +12,7 @@ const uuid = require('uuid/v1')
 //   'fake-group' => [
 //     {
 //       <string> personId,
-//       <string>name,
+//       <string> name,
 //       <string> userData,
 //       <Array[string]> persistedFaceIds
 //     },
@@ -65,6 +65,12 @@ class FakeRepo {
   getPersons (personGroupId) {
     const personsArray = this.persons.has(personGroupId) ? this.persons.get(personGroupId) : null
     return new Promise((resolve, reject) => resolve(personsArray))
+  }
+
+  getPerson (personGroupId, personId) {
+    const personsArray = this.persons.has(personGroupId) ? this.persons.get(personGroupId) : null
+    const person = personsArray.find((person) => person.personId === personId)
+    return new Promise((resolve, reject) => resolve(person))
   }
 
   deletePerson (personGroupId, personId) {

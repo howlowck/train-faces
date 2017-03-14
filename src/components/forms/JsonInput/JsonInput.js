@@ -25,7 +25,10 @@ const getLimitEl = (showLimit, validJson, content, limit) => {
   return <p className={classNames([styles.limit, tooLongClassName])}>Limit: {bytes}/{limit} Bytes</p>
 }
 
-const JsonInput = ({ className, onChange, content, label, maxBytes = 1000, showByteLimit, showJsonTree }) => {
+const JsonInput = ({
+  className, onChange, content,
+  label, maxBytes = 1000, showByteLimit,
+  showJsonTree, width, height }) => {
   const validJson = isJsonString(content)
 
   return (
@@ -36,7 +39,9 @@ const JsonInput = ({ className, onChange, content, label, maxBytes = 1000, showB
         value={content}
         onChange={onChange}
         tabSize={2}
-        height='300px'
+        style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}
+        height={`${height}px`}
+        width={`${width}px`}
         showGutter={false} />
       {getJsonTreeEl(showJsonTree, validJson, content)}
       {getLimitEl(showByteLimit, validJson, content, maxBytes)}
@@ -51,12 +56,16 @@ JsonInput.propTypes = {
   label: PropTypes.string,
   maxBytes: PropTypes.number,
   showJsonTree: PropTypes.bool,
-  showByteLimit: PropTypes.bool
+  showByteLimit: PropTypes.bool,
+  width: PropTypes.number,
+  height: PropTypes.number
 }
 
 JsonInput.defaultProps = {
   showJsonTree: true,
-  showByteLimit: true
+  showByteLimit: true,
+  width: 500,
+  height: 500
 }
 
 export default JsonInput

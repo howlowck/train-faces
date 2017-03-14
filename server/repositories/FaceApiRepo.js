@@ -29,6 +29,10 @@ class FaceApiRepo {
     return this.client.face.person.list(personGroupId)
   }
 
+  getPerson (personGroupId, personId) {
+    return this.client.face.person.get(personGroupId, personId)
+  }
+
   getFace (personGroupId, personId, faceId) {
     return this.client.face.person.getFace(personGroupId, personId, faceId)
   }

@@ -75,6 +75,16 @@ app.delete('/person-groups', (req, res) => {
     })
 })
 
+app.get('/persons/:id', (req, res) => {
+  const api = req.faceApi
+  const groupId = req.query['group_id']
+  const personId = req.params.id
+  api.getPerson(groupId, personId)
+    .then((data) => {
+      res.json(data)
+    })
+})
+
 app.get('/persons', (req, res) => {
   console.log('in the get method all persons')
   const api = req.faceApi

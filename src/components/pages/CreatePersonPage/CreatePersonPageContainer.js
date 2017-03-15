@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { name, userData } = stateProps
+  const { name, userData = '' } = stateProps
   const { dispatch } = dispatchProps
   const { router } = ownProps
   const { groupId } = ownProps.params

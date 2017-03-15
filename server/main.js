@@ -1,4 +1,3 @@
-/* global __PROD__ */
 const express = require('express')
 const debug = require('debug')('app:server')
 // const path = require('path')
@@ -8,14 +7,14 @@ const project = require('../config/project.config')
 const compress = require('compression')
 const bodyParser = require('body-parser')
 const Container = require('./Container')
-const FakeRepo = require('./repositories/FakeRepo')
+// const FakeRepo = require('./repositories/FakeRepo')
 const FaceApiRepo = require('./repositories/FaceApiRepo')
 const _ = require('lodash')
 
 // ------------------------------------
 // Environment Variables
 // ------------------------------------
-const { __PROD__ = false } = process.env
+// const { __PROD__ = false } = process.env
 
 // ------------------------------------
 // Essential Initializations
@@ -48,16 +47,19 @@ const getKeys = (req) => {
 // ------------------------------------
 // IoC Container Registration
 // ------------------------------------
-container.register('faceApi', (apiKey) => new FakeRepo(apiKey), true) // Fake
-if (__PROD__) {
-  container.register('faceApi', (apiKey) => new FaceApiRepo(apiKey)) // Overwrite faceApi with real API if in Prod
-}
+// container.register('faceApi', (apiKey) => new FakeRepo(apiKey), true) // Fake
+// if (__PROD__) {
+container.register('faceApi', (apiKey) => new FaceApiRepo(apiKey)) // Overwrite faceApi with real API if in Prod
+// }
+
 // ------------------------------------
 // Define Custom Middlewares
 // ------------------------------------
 const faceApiMiddleware = (req, res, next) => {
   const { faceApiKey } = getKeys(req)
-  req.faceApi = container.get('faceApi', [faceApiKey])
+  if (faceApiKey) {
+    req.faceApi = container.get('faceApi', [faceApiKey])
+  }
   next()
 }
 
@@ -78,6 +80,8 @@ app.get('/person-groups', (req, res) => {
   api.getPersonGroups().then((data) => {
     console.log(data)
     res.json(data)
+  }).catch((err) => {
+    console.log('API ERROR (list Person Groups):', err.message)
   })
 })
 
@@ -89,6 +93,8 @@ app.post('/person-groups', (req, res) => {
   api.createPersonGroup(groupId, { name, userData })
     .then((data) => {
       res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (create Person Group):', err.message)
     })
 })
 
@@ -98,6 +104,8 @@ app.delete('/person-groups', (req, res) => {
   api.deletePersonGroup(groupId)
     .then((data) => {
       res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (delete Person Group):', err.message)
     })
 })
 
@@ -108,6 +116,8 @@ app.get('/persons/:id', (req, res) => {
   api.getPerson(groupId, personId)
     .then((data) => {
       res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (get one person):', err.message)
     })
 })
 
@@ -117,15 +127,20 @@ app.get('/persons', (req, res) => {
   const groupId = req.query['group_id']
   api.getPersons(groupId).then((data) => {
     res.json(data)
+  }).catch((err) => {
+    console.log('API ERROR (list Persons):', err.message)
   })
 })
 
 app.post('/persons', (req, res) => {
   const api = req.faceApi
   const { groupId, name, userData = '' } = req.body
-  api.createPerson(groupId, { name, userData })
+  const processedUserData = userData ? JSON.stringify(userData) : userData
+  api.createPerson(groupId, { name, userData: processedUserData })
     .then(data => {
       res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (create a Person):', err.message)
     })
 })
 
@@ -135,6 +150,8 @@ app.delete('/persons', (req, res) => {
   api.deletePerson(groupId, personId)
     .then((data) => {
       res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (delete a Person):', err.message)
     })
 })
 
@@ -143,8 +160,7 @@ app.post('/face', (req, res) => {
   const { groupId, personId, userData = '', base64, file } = req.body
   let data
   if (base64) {
-    console.log('got base64 face')
-    data = parseBase64(data)
+    data = parseBase64(base64).data
   }
 
   if (file) {
@@ -153,13 +169,19 @@ app.post('/face', (req, res) => {
   api.createFace(groupId, personId, { data, userData })
     .then(response => {
       res.json(response)
+    }).catch((err) => {
+      console.log('API ERROR (create a face):', err.message)
     })
 })
 
 app.get('/face', (req, res) => {
   const api = req.faceApi
   const { group_id: groupId, person_id: personId, face_id: faceId } = req.query
-  api.getFace(groupId, personId, faceId).then(data => res.json(data))
+  api.getFace(groupId, personId, faceId)
+    .then(data => res.json(data))
+    .catch((err) => {
+      console.log('API ERROR (get face):', err.message)
+    })
 })
 
 app.delete('/face', (req, res) => {
@@ -168,6 +190,8 @@ app.delete('/face', (req, res) => {
   api.deleteFace(groupId, personId, faceId)
     .then((data) => {
       res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (delete face):', err.message)
     })
 })
 

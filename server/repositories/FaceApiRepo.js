@@ -13,11 +13,11 @@ class FaceApiRepo {
     return this.client.face.personGroup.delete(personGroupId)
   }
 
-  createPersonGroup (id, name, userData = {}) {
+  createPersonGroup (id, { name, userData = '' }) {
     return this.client.face.personGroup.create(id, name, userData)
   }
 
-  createPerson (personGroupId, { name, userData = {} }) {
+  createPerson (personGroupId, { name, userData = '' }) {
     return this.client.face.person.create(personGroupId, name, userData)
   }
 
@@ -41,7 +41,7 @@ class FaceApiRepo {
     return this.client.face.person.deleteFace(personId, personId, faceId)
   }
 
-  createFace (personGroupId, personId, { data, userData = {} }) {
+  createFace (personGroupId, personId, { data, userData = '' }) {
     return this.client.face.person.addFace(personGroupId, personId, { data, userData })
   }
 }

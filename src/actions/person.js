@@ -36,6 +36,14 @@ export const requestListPersons = (groupId) => (dispatch, getState) => {
     headers: getApiHeaders(getState())
   })
     .then(res => res.json())
+    .then(personsList => {
+      return personsList.map(person => {
+        return {
+          ...person,
+          userData: JSON.parse(person.userData) || person.userData
+        }
+      })
+    })
 }
 
 export const inputChangeNewPersonName = (nested, data) => ({

@@ -6,6 +6,7 @@ import PersonPage from 'components/pages/PersonPage'
 import PersonGroupsIndexPage from 'components/pages/PersonGroupsIndexPage'
 import GroupIndexPage from 'components/pages/GroupIndexPage'
 import { requestListPersons, setPersons } from 'actions/person'
+import { loadConfig } from 'actions/config'
 
 const personFound = (persons, personId) => {
   // Assuming the personList of the group
@@ -36,6 +37,7 @@ export default (store) => {
           const { dispatch } = store
           const { params } = props
           const { groupId } = params
+          dispatch(loadConfig())
           dispatch(requestListPersons(groupId))
             .then((personsList) => dispatch(setPersons(groupId, personsList)))
         },
@@ -53,6 +55,7 @@ export default (store) => {
               if (personFound(persons[groupId], personId)) {
                 cb(null, PersonPage)
               } else {
+                dispatch(loadConfig())
                 dispatch(requestListPersons(groupId))
                   .then((personsList) => {
                     dispatch(setPersons(groupId, personsList))

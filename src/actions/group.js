@@ -19,7 +19,7 @@ export const createPersonGroup = () => (dispatch, getState) => {
     key: 'creating-person-group'
   })
 
-  fetch('/person-groups', {
+  return fetch('/person-groups', {
     method: 'post',
     headers: getApiHeaders(getState()),
     body: JSON.stringify({
@@ -29,16 +29,16 @@ export const createPersonGroup = () => (dispatch, getState) => {
     return res.json()
   }).then((data) => {
     notification.close('creating-person-group')
-    dispatch(requestListPersonGroups())
+    return dispatch(requestListPersonGroups())
   })
 }
 
 export const requestListPersonGroups = () => (dispatch, getState) => {
-  fetch('/person-groups', {
+  return fetch('/person-groups', {
     headers: getApiHeaders(getState())
   }).then(res => res.json())
     .then(data => {
-      dispatch(setPersonGroups(data))
+      return dispatch(setPersonGroups(data))
     })
 }
 

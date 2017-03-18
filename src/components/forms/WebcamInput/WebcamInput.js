@@ -3,7 +3,7 @@
 import React, { Component, PropTypes } from 'react'
 import { classNames } from 'support/helpers'
 import styles from './WebcamInput.scss'
-import { Button, Icon } from 'antd'
+import { Button } from 'antd'
 
 class WebcamInput extends Component {
   onSuccessGetMedia (stream) {
@@ -29,16 +29,13 @@ class WebcamInput extends Component {
       navigator.getUserMedia({ video: true, audio: false }, this.onSuccessGetMedia.bind(this), () => {})
     }
   }
+
   endStream () {
     if (this.stream) {
       this.stream.getVideoTracks()[0].stop()
       delete this.stream
     }
   }
-
-  // componentDidMount () {
-  //   this.startStream()
-  // }
 
   componentWillUnmount () {
     this.endStream()
@@ -96,7 +93,6 @@ WebcamInput.propTypes = {
   height: PropTypes.number,
   viewWidth: PropTypes.number,
   viewHeight: PropTypes.number,
-  captureLabel: PropTypes.string,
   onCaptureClick: PropTypes.func,
   enabled: PropTypes.bool
 }

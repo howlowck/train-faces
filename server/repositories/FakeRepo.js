@@ -108,6 +108,27 @@ class FakeRepo {
     }
     return new Promise((resolve, reject) => resolve({}))
   }
+
+  detect (data) {
+    return new Promise((resolve, reject) => resolve([]))
+  }
+
+  identify (personIds, groupId, { maxNumOfCandidates = 1, confidenceThreshold = 0.5 }) {
+    return new Promise((resolve, reject) => resolve([]))
+  }
+
+  trainPersonGroup (groupId) {
+    return new Promise((resolve, reject) => resolve({}))
+  }
+
+  getPersonGroupTrainingStatus (groupId) {
+    return new Promise((resolve, reject) => resolve({
+      'status': 'succeeded',
+      'createdDateTime': '2015-05-15T13:45:30',
+      'lastActionDateTime': null,
+      'message': null
+    }))
+  }
 }
 
 module.exports = FakeRepo

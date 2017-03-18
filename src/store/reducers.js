@@ -8,6 +8,8 @@ import inputsReducer from 'reducers/inputs'
 import personsReducer from 'reducers/persons'
 import facesReducer from 'reducers/faces'
 import uiReducer from 'reducers/ui'
+import trainingStatusReducer from 'reducers/trainingStatus'
+import identifyReducer from 'reducers/identify'
 // Import Reducers Here (do not delete this line)
 
 export const makeRootReducer = (asyncReducers) => {
@@ -21,6 +23,8 @@ export const makeRootReducer = (asyncReducers) => {
     persons: personsReducer,
     faces: facesReducer,
     ui: uiReducer,
+    trainingStatus: trainingStatusReducer,
+    identify: identifyReducer,
     // Add Reducers Here (do not delete this line)
     ...asyncReducers
   })

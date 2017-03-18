@@ -28,7 +28,6 @@ class NewFaceWebcamModal extends Component {
           <div className={styles.webcam}>
             <label>Camera</label>
             <WebcamInput
-              captureLabel='Capture'
               onCaptureClick={onCaptureClick}
               enabled={visible}
               viewWidth={240}

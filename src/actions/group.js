@@ -7,6 +7,9 @@ export const REQUEST_LIST_PERSON_GROUPS = 'REQUEST_LIST_PERSON_GROUPS'
 export const SET_PERSON_GROUPS = 'SET_PERSON_GROUPS'
 export const INPUT_CHANGE_NEW_GROUP_NAME = 'INPUT_CHANGE_NEW_GROUP_NAME'
 export const DELETE_GROUP = 'DELETE_GROUP'
+export const TRAIN_GROUP = 'TRAIN_GROUP'
+export const SET_TRAINING_STATUS = 'SET_TRAINING_STATUS'
+export const SET_IDENTIFY_GROUP = 'SET_IDENTIFY_GROUP'
 // Add Action String Constant Here (do not delete this line)
 
 export const createPersonGroup = () => (dispatch, getState) => {
@@ -67,4 +70,33 @@ export const deleteGroup = (groupId) => (dispatch, getState) => {
     return dispatch(setPersonGroups(data))
   })
 }
+
+export const trainGroup = (groupId) => (dispatch, getState) => {
+  return fetch('/train', {
+    method: 'post',
+    headers: getApiHeaders(getState()),
+    body: JSON.stringify({
+      groupId
+    })
+  }).then(res => res.json())
+}
+
+export const getTrainingStatus = (groupId) => (dispatch, getState) => {
+  return fetch(`/training-status?group_id=${groupId}`, {
+    headers: getApiHeaders(getState())
+  })
+  .then(res => res.json())
+}
+
+export const setTrainingStatus = (groupId, data) => ({
+  type: SET_TRAINING_STATUS,
+  groupId,
+  data
+})
+
+export const setIdentifyGroup = (data) => ({
+  type: SET_IDENTIFY_GROUP,
+  data
+})
+
 // Add Action Creator Here (do not delete this line)

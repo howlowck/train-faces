@@ -3,6 +3,7 @@ import CoreLayout from '../layouts/CoreLayout'
 import Home from './Home'
 import Config from './Config'
 import PersonGroups from './PersonGroups'
+import Identify from './Identify'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -13,7 +14,8 @@ export const createRoutes = (store) => ({
   indexRoute: Home,
   childRoutes: [
     Config,
-    PersonGroups(store)
+    PersonGroups(store),
+    Identify
   ]
 })
 

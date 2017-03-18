@@ -44,6 +44,22 @@ class FaceApiRepo {
   createFace (personGroupId, personId, { data, userData = '' }) {
     return this.client.face.person.addFace(personGroupId, personId, { data, userData })
   }
+
+  detect (options) {
+    return this.client.face.detect(options)
+  }
+
+  identifyFace (faceIds, personGroupId, maxNumOfCandidates) {
+    return this.client.face.identify(faceIds, personGroupId, maxNumOfCandidates)
+  }
+
+  trainPersonGroup (personGroupId) {
+    return this.client.face.personGroup.trainingStart(personGroupId)
+  }
+
+  getPersonGroupTrainingStatus (personGroupId) {
+    return this.client.face.personGroup.trainingStatus(personGroupId)
+  }
 }
 
 module.exports = FaceApiRepo

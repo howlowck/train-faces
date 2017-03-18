@@ -23,6 +23,9 @@ export const MyHeader = () => (
       <Item className={styles.liOverwrite} key='3'>
         <Link to='config' className={styles.link} activeClassName={styles.active}>Configure</Link>
       </Item>
+      <Item className={styles.liOverwrite} key='4'>
+        <Link to='identify' className={styles.link} activeClassName={styles.active}>Identify</Link>
+      </Item>
     </Menu>
   </Header>
   // <div className={styles.base}>

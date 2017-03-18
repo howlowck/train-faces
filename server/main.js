@@ -78,7 +78,6 @@ app.use(compress())
 app.get('/person-groups', (req, res) => {
   const api = req.faceApi
   api.getPersonGroups().then((data) => {
-    console.log(data)
     res.json(data)
   }).catch((err) => {
     console.log('API ERROR (list Person Groups):', err.message)
@@ -195,6 +194,51 @@ app.delete('/face', (req, res) => {
     })
 })
 
+app.post('/detect', (req, res) => {
+  const api = req.faceApi
+  const { base64 } = req.body
+  const { data } = parseBase64(base64)
+  console.log('ready to submit to detect')
+  api.detect({ data, returnFaceId: true })
+    .then(data => {
+      res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (detect face):', err.message)
+    })
+})
+
+app.post('/identify', (req, res) => {
+  const api = req.faceApi
+  const { faceIds, groupId } = req.body
+  console.log('faceIds in identify route: ', faceIds)
+  console.log('groupId: ', groupId)
+  api.identifyFace(faceIds, groupId, 1)
+    .then(data => {
+      res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (identify face):', err.message)
+    })
+})
+
+app.post('/train', (req, res) => {
+  const api = req.faceApi
+  const { groupId } = req.body
+  api.trainPersonGroup(groupId)
+    .then(data => {
+      res.json(data)
+    }).catch((err) => {
+      console.log('API ERROR (train Person Group):', err.message)
+    })
+})
+
+app.get('/training-status', (req, res) => {
+  const api = req.faceApi
+  const groupId = req.query['group_id']
+  api.getPersonGroupTrainingStatus(groupId)
+    .then((data) => {
+      res.json(data)
+    })
+})
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------

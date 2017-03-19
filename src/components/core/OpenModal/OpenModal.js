@@ -23,7 +23,6 @@ OpenModal.propTypes = {
   openFunc: PropTypes.func.isRequired,
   modalVisible: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  uid: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge']).isRequired
 }
 

@@ -37,7 +37,7 @@
       }
     },
     "deploy": {
-      "command": "npm run lint && npm run test && npm run clean && npm run compile",
+      "command": "npm run lint && npm run clean && npm run compile",
       "env": {
         "DEBUG": "app:*"
       }
@@ -144,6 +144,8 @@
     "karma-webpack-with-fast-source-maps": "^1.9.2",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
     "mocha": "^3.0.1",
     "nodemon": "^1.10.2",
     "phantomjs-prebuilt": "^2.1.12",

@@ -50,7 +50,6 @@ class NewFaceWebcamModal extends Component {
 }
 
 NewFaceWebcamModal.propTypes = {
-  className: PropTypes.string,
   onCaptureClick: PropTypes.func,
   visible: PropTypes.bool,
   capturedImage: PropTypes.string,

@@ -6,7 +6,6 @@ import WebcamInput from 'components/forms/WebcamInput'
 import FaceImageViewer from 'components/content/FaceImageViewer'
 import JSONTree from 'react-json-tree'
 import themes from 'constants/uiThemes'
-import AceEditor from 'react-ace'
 import 'brace/mode/json'
 import 'brace/theme/github'
 

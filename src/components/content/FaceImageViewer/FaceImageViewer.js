@@ -24,9 +24,9 @@ class FaceImageViewer extends Component {
       ctx.strokeRect(x, y, width, height)
       if (bottomLabel) {
         ctx.fillStyle = color
-        ctx.fillRect(x, y + height, width, 10)
+        ctx.fillRect(x, y + height, width, 18)
         ctx.strokeStyle = 'white'
-        ctx.strokeText(bottomLabel, x + 10, y + height + 10)
+        ctx.strokeText(bottomLabel, x + 10, y + height + 13)
       }
     })
   }

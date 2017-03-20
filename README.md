@@ -1,6 +1,6 @@
 # Cognitive Services Face API Training
 
-![screenshot](imgs/identify-screenshot.png)
+![screenshot](https://howlowck.github.io/train-faces/imgs/identify-screenshot.png)
 
 The goal of this project is to create a dashboard for users to manage and test their [Cognitive Services Face API](https://www.microsoft.com/cognitive-services/en-us/face-api), given that they have a Face API Key
 

@@ -56,7 +56,7 @@ To Spin up your own instance of the Training Face, you will need `node`, `npm` o
 4. go to [`localhost:3000`](http://localhost:3000)
 
 ### To Contribute
-It is important to run `yarn run lint` before you make a pull request.
+Please refer to the [CONTRIBUTING.md](https://github.com/howlowck/train-faces/blob/master/CONTRIBUTING.md)
 
 ### TODO
 * Async Flow in UI

@@ -57,11 +57,3 @@ To Spin up your own instance of the Training Face, you will need `node`, `npm` o
 ### To Contribute
 Please refer to the [CONTRIBUTING.md](https://github.com/howlowck/train-faces/blob/master/CONTRIBUTING.md)
 
-### TODO
-* Async Flow in UI
-* Auto Refresh on FaceAPIKey change
-* Mobile Friendly
-* Fix User Data for Face Creation
-* Add User Data for Person Group Creation
-* Convert ternary operators to `_.get` for readability
-* Build dist on server

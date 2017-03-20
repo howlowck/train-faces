@@ -58,3 +58,4 @@ Please refer to the [CONTRIBUTING.md](https://github.com/howlowck/train-faces/bl
 * Add User Data for Person Group Creation
 * Convert ternary operators to `_.get` for readability
 * Build dist on server
+* Helpful Error Messages

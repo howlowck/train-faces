@@ -1,5 +1,6 @@
-# Training Faces
-![screenshot](https://howlowck.github.io/train-faces/imgs/identify-screenshot.png)
+# Cognitive Services Face API Training
+
+![screenshot](imgs/identify-screenshot.png)
 
 The goal of this project is to create a dashboard for users to manage and test their [Cognitive Services Face API](https://www.microsoft.com/cognitive-services/en-us/face-api), given that they have a Face API Key
 
@@ -47,7 +48,7 @@ To Spin up your own instance of the Training Face, you will need `node`, `npm` o
 4. go to [`localhost:3000`](http://localhost:3000)
 
 ### To Contribute
-It is important to run `yarn run lint` before you make a pull request.
+Please refer to the [CONTRIBUTING.md](https://github.com/howlowck/train-faces/blob/master/CONTRIBUTING.md)
 
 ### TODO
 * Async Flow in UI

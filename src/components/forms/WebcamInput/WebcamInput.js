@@ -75,7 +75,7 @@ class WebcamInput extends Component {
             width: viewWidth,
             height: viewHeight
           }}
-          />
+        />
         <Button type='primary'
           className={styles.captureButton}
           onClick={onButtonClick}

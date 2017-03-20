@@ -7,7 +7,7 @@ const { Item } = Menu
 
 export const MyHeader = () => (
   <Header>
-    <span className={styles.title}>Training Phase</span>
+    <span className={styles.title}>Training Face</span>
     <Menu
       theme='dark'
       mode='horizontal'

@@ -15,7 +15,7 @@ class PersonGroupsPage extends Component {
               className={styles.item}
               key={`${group.personGroupId}-link`}
               activeClassName={styles.selectedItem}
-              >
+            >
               {group.name}
             </Link>
           ))}

@@ -23,7 +23,7 @@ class NewFaceWebcamModal extends Component {
         onCancel={onCancel}
         onOk={onOk}
         footer={null}
-        >
+      >
         <div className={styles.inputs}>
           <div className={styles.webcam}>
             <label>Camera</label>

@@ -1,4 +1,4 @@
-# Cognitive Services Face API Training
+# Cognitive Services Face API Training [![Build Status](https://travis-ci.org/howlowck/train-faces.svg?branch=master)](https://travis-ci.org/howlowck/train-faces)
 
 ![screenshot](https://howlowck.github.io/train-faces/imgs/identify-screenshot.png)
 

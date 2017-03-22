@@ -100,7 +100,8 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! install
+  call :ExecuteCmd !NPM_CMD! install --only=prod
+  call :ExecuteCmd !NPM_CMD! install --only=dev
   call :ExecuteCmd !NPM_CMD! run deploy:prod
   IF !ERRORLEVEL! NEQ 0 goto error
   popd

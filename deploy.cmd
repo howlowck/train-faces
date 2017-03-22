@@ -101,12 +101,10 @@ call :SelectNodeVersion
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install
+  call :ExecuteCmd !NPM_CMD! run deploy:prod
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
-
-:: 4. Build Static assets
-call :ExecuteCmd !NPM_CMD! run deploy:prod
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 goto end

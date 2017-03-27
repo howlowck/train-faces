@@ -4,6 +4,7 @@ import React, { PropTypes } from 'react'
 import styles from './HomePage.scss'
 import { Link } from 'react-router'
 import { TwitterButton, FacebookLikeButton } from 'react-social-buttons'
+import { Icon } from 'antd'
 
 const url = location.href
 
@@ -12,7 +13,7 @@ export const HomePage = ({ guests }) => (
     <h1>Get Ready to Train your Face API!!!</h1>
     <h2>How to use this tool:</h2>
     <ol>
-      <li>1. Get a key from the Cognitive Service Face API</li>
+      <li>1. Get a key from the <a href='https://www.microsoft.com/cognitive-services/en-us/face-api'>Cognitive Service Face API <Icon type='export' /></a></li>
       <li>2. Copy and paste the key into "FaceApiKey" in the <Link to='config'>Configure</Link> Section</li>
       <li>3. <Link to='person-groups/_create'>Create a PersonGroup</Link></li>
       <li>4. Go to your created group and Add a Person (like you).</li>

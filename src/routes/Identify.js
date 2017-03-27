@@ -2,6 +2,6 @@ import IdentifyPage from 'components/pages/IdentifyPage'
 
 // Sync route definition
 export default {
-  path: 'identify',
+  path: 'test',
   component: IdentifyPage
 }

@@ -5668,6 +5668,10 @@ react-slick@~0.14.2:
     react-responsive-mixin "^0.4.0"
     slick-carousel "^1.6.0"
 
+react-social-buttons@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-social-buttons/-/react-social-buttons-1.0.8.tgz#3e69dfe94b82c3e26fcf65010d544a6e0b6e2e4f"
+
 react-syntax-highlighter@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-5.0.0.tgz#571c3418cc87b6e46839def297df74051b778571"

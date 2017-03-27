@@ -32,7 +32,7 @@ class IdentifyPage extends Component {
 
     return (
       <div className={classNames([styles.base, className])}>
-        <h2>Identify Demo</h2>
+        <h2>Test Trained Faces</h2>
         <p>To identify a face, you will first need "detect" a face,
           then "identify" the faces with the faceIds returned back from the detect route</p>
         <Steps>

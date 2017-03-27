@@ -7,7 +7,7 @@ const { Item } = Menu
 
 export const MyHeader = () => (
   <Header>
-    <span className={styles.title}>Training Face</span>
+    <span className={styles.title}>Face Trainer</span>
     <Menu
       theme='dark'
       mode='horizontal'
@@ -17,14 +17,14 @@ export const MyHeader = () => (
       <Item className={styles.liOverwrite} key='1'>
         <IndexLink to='/' className={styles.link} activeClassName={styles.active}>Home</IndexLink>
       </Item>
-      <Item className={styles.liOverwrite} key='2'>
-        <Link to='person-groups' className={styles.link} activeClassName={styles.active}>Manage</Link>
-      </Item>
       <Item className={styles.liOverwrite} key='3'>
         <Link to='config' className={styles.link} activeClassName={styles.active}>Configure</Link>
       </Item>
+      <Item className={styles.liOverwrite} key='2'>
+        <Link to='person-groups' className={styles.link} activeClassName={styles.active}>Manage</Link>
+      </Item>
       <Item className={styles.liOverwrite} key='4'>
-        <Link to='identify' className={styles.link} activeClassName={styles.active}>Identify</Link>
+        <Link to='test' className={styles.link} activeClassName={styles.active}>Test</Link>
       </Item>
     </Menu>
   </Header>

@@ -6,8 +6,11 @@ const CreateGroupPage = ({ className, onNameValueChange, groupName, onSubmit }) 
   <div className={classNames([styles.base, className])}>
     <h3>Create Person Group</h3>
     <form onSubmit={onSubmit}>
-      <input id='group-name' name='group-name' onChange={onNameValueChange} value={groupName} />
-      <button>Create!</button>
+      <label>Name: (example: Test Group)</label>
+      <br />
+      <input required id='group-name' name='group-name' onChange={onNameValueChange} value={groupName} />
+      <br />
+      <button>Create</button>
     </form>
   </div>
 )

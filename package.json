@@ -152,6 +152,7 @@
     "react-async-button": "^0.0.7",
     "react-dom": "^15.0.0",
     "react-json-tree": "^0.10.5",
+    "react-social-buttons": "^1.0.8",
     "react-syntax-highlighter": "^5.0.0",
     "redbox-react": "^1.2.10",
     "redux-thunk": "^2.0.0",

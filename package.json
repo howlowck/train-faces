@@ -14,7 +14,7 @@
     "lint": "eslint bin build config server src tests",
     "lint:fix": "npm run lint -- --fix",
     "start": "better-npm-run start",
-    "dev": "better-npm-run dev",
+    "serve": "better-npm-run serve",
     "test": "better-npm-run test",
     "test:dev": "npm run test -- --watch",
     "deploy": "better-npm-run deploy",
@@ -29,10 +29,10 @@
         "DEBUG": "app:*"
       }
     },
-    "dev": {
-      "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests --ignore src",
+    "serve": {
+      "command": "nodemon server --ignore dist --ignore coverage --ignore tests --ignore src",
       "env": {
-        "NODE_ENV": "development",
+        "NODE_ENV": "production",
         "DEBUG": "app:*"
       }
     },

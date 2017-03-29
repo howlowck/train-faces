@@ -1,8 +1,6 @@
 const express = require('express')
 const debug = require('debug')('app:server')
 // const path = require('path')
-const webpack = require('webpack')
-const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
 const bodyParser = require('body-parser')
@@ -243,6 +241,8 @@ app.get('/training-status', (req, res) => {
 // Apply Webpack HMR Middleware
 // ------------------------------------
 if (project.env === 'development') {
+  const webpack = require('webpack')
+  const webpackConfig = require('../config/webpack.config')
   const compiler = webpack(webpackConfig)
 
   debug('Enabling webpack dev and HMR middleware')

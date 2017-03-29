@@ -13,7 +13,7 @@ export const HomePage = ({ guests }) => (
     <h1>Get Ready to Train your Face API!!!</h1>
     <h2>How to use this tool:</h2>
     <ol>
-      <li>1. Get a key from the
+      <li>1. Get a key from the&nbsp;
         <a href='https://www.microsoft.com/cognitive-services/en-us/face-api'>
           Cognitive Service Face API <Icon type='export' />
         </a>

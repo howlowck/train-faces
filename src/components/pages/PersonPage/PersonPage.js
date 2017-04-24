@@ -6,6 +6,7 @@ import JSONTree from 'react-json-tree'
 import themes from 'constants/uiThemes'
 import OpenModal from 'components/core/OpenModal'
 import NewFaceWebcamModal from 'components/content/NewFaceWebcamModal'
+import NewFaceFileModal from 'components/content/NewFaceFileModal'
 import { Button } from 'antd'
 
 class PersonPage extends Component {
@@ -14,7 +15,7 @@ class PersonPage extends Component {
       onCaptureWebcamClick, capturedImage,
       onModalClose, onDeletePerson,
       newFaceUserData, onChangeUserData,
-      onCreateFaceSubmit
+      onCreateFaceSubmit, onFileChange
     } = this.props
 
     const { userData } = person
@@ -35,6 +36,15 @@ class PersonPage extends Component {
             onChangeUserData={onChangeUserData}
             onSubmit={onCreateFaceSubmit} />
         </OpenModal>
+        <OpenModal name='newFaceFileModal' buttonText='Add with File' onModalClose={onModalClose}>
+          <NewFaceFileModal
+            onImageLoad={onFileChange}
+            onChangeUserData={onChangeUserData}
+            capturedImage={capturedImage}
+            onSubmit={onCreateFaceSubmit}
+            userData={newFaceUserData}
+          />
+        </OpenModal>
 
         <p>You have {faceCount} {pluralize('face', faceCount)} registered for this person</p>
       </div>
@@ -51,6 +61,7 @@ PersonPage.propTypes = {
   onDeletePerson: PropTypes.func,
   newFaceUserData: PropTypes.string,
   onChangeUserData: PropTypes.func,
-  onCreateFaceSubmit: PropTypes.func
+  onCreateFaceSubmit: PropTypes.func,
+  onFileChange: PropTypes.func
 }
 export default PersonPage

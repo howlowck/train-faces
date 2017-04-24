@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onCaptureWebcamClick: (data) => {
     dispatch(inputChangeNewFaceImage(data))
   },
+  onFileChange: (data) => {
+    dispatch(inputChangeNewFaceImage(data))
+  },
   onModalClose: () => {
     dispatch(inputChangeNewFaceImage(null))
   },

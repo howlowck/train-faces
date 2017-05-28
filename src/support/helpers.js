@@ -1,14 +1,7 @@
-/* global btoa */
+/* global btoa, fetch */
 
 import { decode } from 'base64-arraybuffer'
 
-/**
- * Returns concatenated list of css class names separated
- * by a white space
- *
- * @param names
- * @returns {string}
- */
 export function classNames (names) {
   const filtered = names.filter((className) => !!className)
   return filtered.join(' ')
@@ -38,7 +31,9 @@ export function isJsonString (str) {
     if (o && typeof o === 'object') {
       return o
     }
-  } catch (e) { }
+  } catch (e) {
+    console.error(e)
+  }
 
   return false
 }
@@ -56,6 +51,15 @@ export function getShrug () {
 export function getApiHeaders (state) {
   return {
     'Content-Type': 'application/json; charset=UTF-8',
-    'Cog-Services-FaceApi-Key': state.config.FaceApiKey
+    'Ocp-Apim-Subscription-Key': state.config.FaceApiKey
   }
+}
+
+export function getFaceApiEndpoint (state) {
+  return state.config.FaceApiEndpoint
+}
+
+export function getBufferFromBase64 (base64) {
+  return fetch(base64)
+          .then(res => res.blob())
 }

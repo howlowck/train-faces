@@ -1,5 +1,5 @@
 /* global fetch */
-import { getApiHeaders } from 'support/helpers'
+import { getApiHeaders, getFaceApiEndpoint } from 'support/helpers'
 export const SET_PERSONS = 'SET_PERSONS'
 export const REQUEST_LIST_PERSONS = 'REQUEST_LIST_PERSONS'
 export const INPUT_CHANGE_NEW_PERSON_NAME = 'INPUT_CHANGE_NEW_PERSON_NAME'
@@ -18,21 +18,31 @@ export const setPersons = (groupId, data) => {
 }
 
 export const createPerson = (groupId, name, userData) => (dispatch, getState) => {
-  return fetch('/persons', {
+  const endpoint = getFaceApiEndpoint(getState())
+
+  const bodyPayload = JSON.stringify({
+    name,
+    userData: JSON.stringify(userData)
+  })
+
+  return fetch(`${endpoint}/persongroups/${groupId}/persons`, {
     method: 'post',
     headers: getApiHeaders(getState()),
-    body: JSON.stringify({
-      groupId,
-      name,
-      userData
-    })
+    body: bodyPayload
   })
   .then(res => res.json())
+  .catch((err) => {
+    console.error(err.message)
+  })
   .then(data => data.personId)
+  .catch((err) => {
+    console.error(err.message)
+  })
 }
 
 export const requestListPersons = (groupId) => (dispatch, getState) => {
-  return fetch(`/persons?group_id=${groupId}`, {
+  const endpoint = getFaceApiEndpoint(getState())
+  return fetch(`${endpoint}/persongroups/${groupId}/persons`, {
     headers: getApiHeaders(getState())
   })
     .then(res => res.json())
@@ -59,15 +69,12 @@ export const inputChangeNewPersonUserData = (nested, data) => ({
 })
 
 export const deletePerson = (groupId, personId) => (dispatch, getState) => {
-  return fetch('/persons', {
+  const endpoint = getFaceApiEndpoint(getState())
+
+  return fetch(`${endpoint}/persongroups/${groupId}/persons/${personId}`, {
     method: 'delete',
-    headers: getApiHeaders(getState()),
-    body: JSON.stringify({
-      groupId,
-      personId
-    })
+    headers: getApiHeaders(getState())
   })
-  .then(res => res.json())
   .then(() => {
     return dispatch(requestListPersons(groupId))
   }).then((data) => {
@@ -76,7 +83,8 @@ export const deletePerson = (groupId, personId) => (dispatch, getState) => {
 }
 
 export const requestGetPerson = (groupId, personId) => (dispatch, getState) => {
-  return fetch(`/persons/${personId}?group_id=${groupId}`, {
+  const endpoint = getFaceApiEndpoint(getState())
+  return fetch(`${endpoint}/persongroups/${groupId}/persons/${personId}`, {
     headers: getApiHeaders(getState())
   })
     .then(res => res.json())

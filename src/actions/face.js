@@ -1,5 +1,5 @@
 /* global fetch */
-import { getApiHeaders } from 'support/helpers'
+import { getApiHeaders, getFaceApiEndpoint, getBufferFromBase64 } from 'support/helpers'
 export const UPLOAD_BASE64_FACE = 'UPLOAD_BASE64_FACE'
 export const DELETE_FACE = 'DELETE_FACE'
 export const INPUT_CHANGE_NEW_FACE_USER_DATA = 'INPUT_CHANGE_NEW_FACE_USER_DATA'
@@ -30,14 +30,16 @@ export const inputChangeNewFaceUserData = (data) => ({
 })
 
 export const createFaceWithData = (groupId, personId, data, userData) => (dispatch, getState) => {
-  return fetch('/face', {
-    method: 'post',
-    headers: getApiHeaders(getState()),
-    body: JSON.stringify({
-      base64: data,
-      groupId,
-      personId,
-      userData
+  const endpoint = getFaceApiEndpoint(getState())
+  const defaultHeaders = getApiHeaders(getState())
+  return getBufferFromBase64(data).then((blob) => {
+    return fetch(`${endpoint}/persongroups/${groupId}/persons/${personId}/persistedFaces`, {
+      method: 'post',
+      headers: {
+        ...defaultHeaders,
+        'Content-Type': 'application/octet-stream'
+      },
+      body: blob
     })
   }).then((res) => {
     return res.json()
@@ -45,24 +47,32 @@ export const createFaceWithData = (groupId, personId, data, userData) => (dispat
 }
 
 export const detectFace = (data) => (dispatch, getState) => {
-  return fetch('/detect', {
-    method: 'post',
-    headers: getApiHeaders(getState()),
-    body: JSON.stringify({
-      base64: data
+  const endpoint = getFaceApiEndpoint(getState())
+  const defaultHeader = getApiHeaders(getState())
+  return getBufferFromBase64(data).then((blob) => {
+    return fetch(`${endpoint}/detect`, {
+      method: 'post',
+      headers: {
+        ...defaultHeader,
+        'Content-Type': 'application/octet-stream'
+      },
+      body: blob
     })
-  }).then((res) => {
+  })
+  .then((res) => {
     return res.json()
   })
 }
 
 export const identifyFace = (faceIdArray, groupId) => (dispatch, getState) => {
-  return fetch('/identify', {
+  const endpoint = getFaceApiEndpoint(getState())
+  return fetch(`${endpoint}/identify`, {
     method: 'post',
     headers: getApiHeaders(getState()),
     body: JSON.stringify({
       faceIds: faceIdArray,
-      groupId
+      personGroupId: groupId,
+      maxNumOfCandiatesReturned: 3
     })
   }).then((res) => {
     return res.json()

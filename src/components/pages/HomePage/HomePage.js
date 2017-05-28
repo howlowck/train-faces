@@ -18,7 +18,9 @@ export const HomePage = ({ guests }) => (
           Cognitive Service Face API <Icon type='export' />
         </a>
       </li>
-      <li>2. Copy and paste the key into "FaceApiKey" in the <Link to='config'>Configure</Link> Section</li>
+      <li>2. Copy and paste the Api endpoint and Key from the Azure Portal into the
+        <Link to='config'>Configure</Link> Page
+      </li>
       <li>3. <Link to='person-groups/_create'>Create a PersonGroup</Link></li>
       <li>4. Go to your created group and Add a Person (like you).</li>
       <li>5. Add a Face by using the webcam</li>

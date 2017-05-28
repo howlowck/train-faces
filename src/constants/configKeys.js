@@ -1,5 +1,6 @@
 export default [
-  'AzureStorageUrl',
-  'AzureStorageKey',
+  // 'AzureStorageUrl',
+  // 'AzureStorageKey',
+  'FaceApiEndpoint',
   'FaceApiKey'
 ]

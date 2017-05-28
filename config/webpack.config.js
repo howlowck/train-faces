@@ -12,14 +12,14 @@ const __TEST__ = project.globals.__TEST__
 
 debug('Creating configuration.')
 const webpackConfig = {
-  name    : 'client',
-  target  : 'web',
-  devtool : project.compiler_devtool,
-  resolve : {
-    root       : project.paths.client(),
-    extensions : ['', '.js', '.jsx', '.json']
+  name: 'client',
+  target: 'web',
+  devtool: project.compiler_devtool,
+  resolve: {
+    root: project.paths.client(),
+    extensions: ['', '.js', '.jsx', '.json']
   },
-  module : {}
+  module: {}
 }
 // ------------------------------------
 // Entry Points
@@ -27,19 +27,20 @@ const webpackConfig = {
 const APP_ENTRY = project.paths.client('main.js')
 
 webpackConfig.entry = {
-  app : __DEV__
+  app: __DEV__
     ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
     : [APP_ENTRY],
-  vendor : project.compiler_vendors
+  vendor: project.compiler_vendors
 }
 
 // ------------------------------------
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-  filename   : `[name].[${project.compiler_hash_type}].js`,
-  path       : project.paths.dist(),
-  publicPath : project.compiler_public_path
+  // filename: `[name].[${project.compiler_hash_type}].js`,
+  filename: `[name].js`,
+  path: project.paths.dist(),
+  publicPath: project.compiler_public_path
 }
 
 // ------------------------------------
@@ -56,13 +57,13 @@ webpackConfig.externals['react/addons'] = true
 webpackConfig.plugins = [
   new webpack.DefinePlugin(project.globals),
   new HtmlWebpackPlugin({
-    template : project.paths.client('index.html'),
-    hash     : false,
-    favicon  : project.paths.public('favicon.ico'),
-    filename : 'index.html',
-    inject   : 'body',
-    minify   : {
-      collapseWhitespace : true
+    template: project.paths.client('index.html'),
+    hash: false,
+    favicon: project.paths.public('favicon.ico'),
+    filename: 'index.html',
+    inject: 'body',
+    minify: {
+      collapseWhitespace: true
     }
   })
 ]
@@ -95,10 +96,10 @@ if (__DEV__) {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      compress : {
-        unused    : true,
-        dead_code : true,
-        warnings  : false
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false
       }
     }),
     new webpack.optimize.AggressiveMergingPlugin()
@@ -109,7 +110,7 @@ if (__DEV__) {
 if (!__TEST__) {
   webpackConfig.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
-      names : ['vendor']
+      names: ['vendor']
     })
   )
 }
@@ -119,13 +120,13 @@ if (!__TEST__) {
 // ------------------------------------
 // JavaScript / JSON
 webpackConfig.module.loaders = [{
-  test    : /\.(js|jsx)$/,
-  exclude : /node_modules/,
-  loader  : 'babel',
-  query   : project.compiler_babel
+  test: /\.(js|jsx)$/,
+  exclude: /node_modules/,
+  loader: 'babel',
+  query: project.compiler_babel
 }, {
-  test   : /\.json$/,
-  loader : 'json'
+  test: /\.json$/,
+  loader: 'json'
 }]
 
 // ------------------------------------
@@ -136,9 +137,9 @@ webpackConfig.module.loaders = [{
 const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
 
 webpackConfig.module.loaders.push({
-  test    : /\.scss$/,
-  exclude : null,
-  loaders : [
+  test: /\.scss$/,
+  exclude: null,
+  loaders: [
     'style',
     BASE_CSS_LOADER + '&modules',
     'postcss',
@@ -146,9 +147,9 @@ webpackConfig.module.loaders.push({
   ]
 })
 webpackConfig.module.loaders.push({
-  test    : /\.css$/,
-  exclude : null,
-  loaders : [
+  test: /\.css$/,
+  exclude: null,
+  loaders: [
     'style',
     BASE_CSS_LOADER,
     'postcss'
@@ -175,24 +176,24 @@ webpackConfig.module.loaders.push({
 })
 
 webpackConfig.sassLoader = {
-  includePaths : project.paths.client('styles')
+  includePaths: project.paths.client('styles')
 }
 
 webpackConfig.postcss = [
   cssnano({
-    autoprefixer : {
-      add      : true,
-      remove   : true,
-      browsers : ['last 2 versions']
+    autoprefixer: {
+      add: true,
+      remove: true,
+      browsers: ['last 2 versions']
     },
-    discardComments : {
-      removeAll : true
+    discardComments: {
+      removeAll: true
     },
-    discardUnused : false,
-    mergeIdents   : false,
-    reduceIdents  : false,
-    safe          : true,
-    sourcemap     : true
+    discardUnused: false,
+    mergeIdents: false,
+    reduceIdents: false,
+    safe: true,
+    sourcemap: true
   })
 ]
 
@@ -227,8 +228,8 @@ if (!__DEV__) {
   })
 
   webpackConfig.plugins.push(
-    new ExtractTextPlugin('[name].[contenthash].css', {
-      allChunks : true
+    new ExtractTextPlugin('[name].css', {
+      allChunks: true
     })
   )
 }

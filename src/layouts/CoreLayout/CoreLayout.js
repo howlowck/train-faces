@@ -1,9 +1,10 @@
 import React from 'react'
 import Header from '../../components/Header'
 import { Layout } from 'antd'
-const { Content, Footer } = Layout
 import './CoreLayout.scss'
 import '../../styles/core.scss'
+
+const { Content, Footer } = Layout
 
 export const CoreLayout = ({ children }) => (
   <Layout className='layout'>

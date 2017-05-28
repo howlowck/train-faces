@@ -1,6 +1,7 @@
 /* global fetch */
 import { notification } from 'antd'
-import { getApiHeaders } from 'support/helpers'
+import { getApiHeaders, getFaceApiEndpoint } from 'support/helpers'
+import { snakeCase } from 'lodash'
 
 export const CREATE_PERSON_GROUP = 'CREATE_PERSON_GROUP'
 export const REQUEST_LIST_PERSON_GROUPS = 'REQUEST_LIST_PERSON_GROUPS'
@@ -14,6 +15,7 @@ export const SET_IDENTIFY_GROUP = 'SET_IDENTIFY_GROUP'
 
 export const createPersonGroup = () => (dispatch, getState) => {
   const newGroupName = getState().inputs.new_group_name.value
+  const groupId = snakeCase(newGroupName).toLowerCase()
 
   notification.open({
     message: 'Info',
@@ -22,22 +24,23 @@ export const createPersonGroup = () => (dispatch, getState) => {
     key: 'creating-person-group'
   })
 
-  return fetch('/person-groups', {
-    method: 'post',
+  const endpoint = getFaceApiEndpoint(getState())
+  console.log(groupId)
+  return fetch(`${endpoint}/persongroups/${groupId}`, {
+    method: 'put',
     headers: getApiHeaders(getState()),
     body: JSON.stringify({
       name: newGroupName
     })
   }).then((res) => {
-    return res.json()
-  }).then((data) => {
     notification.close('creating-person-group')
     return dispatch(requestListPersonGroups())
   })
 }
 
 export const requestListPersonGroups = () => (dispatch, getState) => {
-  return fetch('/person-groups', {
+  const endpoint = getFaceApiEndpoint(getState())
+  return fetch(`${endpoint}/persongroups`, {
     headers: getApiHeaders(getState())
   }).then(res => res.json())
     .then(data => {
@@ -56,33 +59,30 @@ export const inputChangeNewGroupName = (data) => ({
 })
 
 export const deleteGroup = (groupId) => (dispatch, getState) => {
-  return fetch('/person-groups', {
+  const endpoint = getFaceApiEndpoint(getState())
+  return fetch(`${endpoint}/persongroups/${groupId}`, {
     method: 'delete',
-    headers: getApiHeaders(getState()),
-    body: JSON.stringify({
-      groupId
-    })
+    headers: getApiHeaders(getState())
   })
-  .then(res => res.json())
   .then(() => {
-    return dispatch(requestListPersonGroups(groupId))
-  }).then((data) => {
-    return dispatch(setPersonGroups(data))
+    return dispatch(requestListPersonGroups())
   })
 }
 
 export const trainGroup = (groupId) => (dispatch, getState) => {
-  return fetch('/train', {
+  const endpoint = getFaceApiEndpoint(getState())
+  return fetch(`${endpoint}/persongroups/${groupId}/train`, {
     method: 'post',
     headers: getApiHeaders(getState()),
     body: JSON.stringify({
       groupId
     })
-  }).then(res => res.json())
+  })
 }
 
 export const getTrainingStatus = (groupId) => (dispatch, getState) => {
-  return fetch(`/training-status?group_id=${groupId}`, {
+  const endpoint = getFaceApiEndpoint(getState())
+  return fetch(`${endpoint}/persongroups/${groupId}/training`, {
     headers: getApiHeaders(getState())
   })
   .then(res => res.json())

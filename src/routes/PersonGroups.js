@@ -48,12 +48,12 @@ export default (store) => {
           },
           {
             path: ':personId',
-            getComponent: (nextState, cb) => {
+            getComponent: (nextState, render) => {
               const { groupId, personId } = nextState.params
               const { dispatch } = store
               const { persons } = store.getState()
               if (personFound(persons[groupId], personId)) {
-                cb(null, PersonPage)
+                render(null, PersonPage)
               } else {
                 dispatch(loadConfig())
                 dispatch(requestListPersons(groupId))
@@ -63,10 +63,10 @@ export default (store) => {
                   })
                   .then((personsList) => {
                     if (personFound(personsList, personId)) {
-                      cb(null, PersonPage)
+                      render(null, PersonPage)
                     }
                     // TODO: implement a Not Found Page
-                    cb('user Not Found')
+                    render('user Not Found')
                   })
               }
             }

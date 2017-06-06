@@ -18,7 +18,7 @@ The goal of this project is to create a dashboard for users to manage and test t
 * Quickly submit Face entities using the webcam
 
 ## Getting Started
-You can go to the [Live App](https://train-faces.azurewebsites.net/#/).
+You can go to the [Live App](http://aka.ms/trainfaces).
 
 Or if you want to Spin up your own instance of the Training Face, you will need `node`, `npm` or [`yarn`](https://yarnpkg.com/en/):
 1. clone this repository

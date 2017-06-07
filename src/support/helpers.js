@@ -63,3 +63,12 @@ export function getBufferFromBase64 (base64) {
   return fetch(base64)
           .then(res => res.blob())
 }
+
+export function getScaleImageFit ({ imageWidth, imageHeight }, { constraintWidth, constraintHeight }) {
+  let scaleWidth = constraintWidth / imageWidth
+  let scaleHeight = constraintHeight / imageHeight
+  if (scaleWidth < scaleHeight) {
+    return scaleWidth
+  }
+  return scaleHeight
+}

@@ -1,7 +1,8 @@
-/* global FileReader */
+
 import React, { PropTypes } from 'react'
 import { classNames, isJsonString } from 'support/helpers'
 import JsonInput from 'components/forms/JsonInput'
+import SingleFileInput from 'components/forms/SingleFileInput'
 import { Modal, Button, Tooltip, Icon } from 'antd'
 import styles from './NewFaceFileModal.scss'
 
@@ -17,25 +18,7 @@ const NewFaceFileModal = (
     onCancel, onOk, onImageLoad, onChangeUserData, onSubmit,
     afterModalClose, // event listener
     capturedImage, userData // content
-  }) => {
-  const handleChange = (event) => {
-    event.preventDefault()
-
-    let reader = new FileReader()
-    let file = event.target.files[0]
-
-    reader.onloadend = () => {
-      onImageLoad(reader.result)
-      // this.setState({
-      //   file: file,
-      //   imagePreviewUrl: reader.result
-      // })
-    }
-
-    reader.readAsDataURL(file)
-  }
-
-  return (
+  }) => (
     <Modal
       className={classNames([styles.base, className])}
       title='Add with Webcam'
@@ -45,7 +28,8 @@ const NewFaceFileModal = (
       onOk={onOk}
       footer={null}
     >
-      <input type='file' onChange={handleChange} />
+
+      <SingleFileInput onImageSet={onImageLoad} />
       <div className={styles.userData}>
         <label>User Data <Tooltip placement='right' title='Max 1KB'><Icon type='info-circle' /></Tooltip></label>
         <JsonInput width={235} height={160} showJsonTree={false} onChange={onChangeUserData} content={userData} />
@@ -57,7 +41,6 @@ const NewFaceFileModal = (
       {getSubmitButtonEl(capturedImage, userData, onSubmit)}
     </Modal>
   )
-}
 
 NewFaceFileModal.propTypes = {
   className: PropTypes.string,

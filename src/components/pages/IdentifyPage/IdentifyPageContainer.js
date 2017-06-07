@@ -4,6 +4,8 @@ import { inputChangeWebcamIdentifyImage } from 'actions/webcam'
 import { detectFace, setDetectedFaces, identifyFace, resetIdentifyFace, setIdentifiedResults } from 'actions/face'
 import { setIdentifyGroup } from 'actions/group'
 import { requestListPersons, setPersons } from 'actions/person'
+import { setIdentifyInputMethod } from 'actions/ui'
+import { WEBCAM, UPLOAD } from 'constants/identifyInputMethod'
 import get from 'lodash.get'
 
 const transformFacesToShapes = (facesArray, results, persons = []) => {
@@ -34,7 +36,8 @@ const mapStateToProps = (state) => {
     detectStatus: faces.length > 0 ? 'finish' : 'wait',
     groupSelectStatus: groupId ? 'finish' : 'wait',
     identifyStatus: results.length > 0 ? 'finish' : 'wait',
-    groups: state.personGroups
+    groups: state.personGroups,
+    inputMethod: state.identify.method
   }
 }
 
@@ -45,6 +48,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(inputChangeWebcamIdentifyImage(data))
     dispatch(detectFace(data))
       .then((data) => dispatch(setDetectedFaces(data)))
+  },
+  onImageInputToggleChange: (value) => {
+    if (value === WEBCAM) {
+      dispatch(setIdentifyInputMethod('webcam'))
+    }
+    if (value === UPLOAD) {
+      dispatch(setIdentifyInputMethod('upload'))
+    }
   },
   dispatch
 })

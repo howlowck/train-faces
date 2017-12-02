@@ -15,22 +15,23 @@ You can go to the [Live App](http://aka.ms/trainfaces).
 
 Or if you want to Spin up your own instance of this app, you will need `node`, `npm` or [`yarn`](https://yarnpkg.com/en/):
 1. clone this repository
-2. run `npm install --production` (this will take a little while)
-3. run `node server`
+2. run `npm install` (this will take a little while)
+3. run `yarn start` OR `yarn run compile` and serve the assets in the `dist` directory
 4. go to [`http://localhost:3000`](http://localhost:3000)
 
 ----
 ## Technical Details
 
 ### Key Application Dependencies
-#### Backend
-* [express](https://expressjs.com/) (Server)
-* [project-oxford](https://github.com/felixrieseberg/project-oxford) (Face API Client)
+#### ~~Backend~~ This app is now serverless :)
+* ~~[express](https://expressjs.com/) (Server)~~
+* ~~[project-oxford](https://github.com/felixrieseberg/project-oxford) (Face API Client)~~
 
 #### Frontend
 * [react](https://www.npmjs.com/package/react) (View Layer)
 * [redux](https://www.npmjs.com/package/redux) (App State Management)
 * [react-router](https://www.npmjs.com/package/react-router) (Router for React)
+* [redux-thunk]((https://www.npmjs.com/package/react-router) (Redux Async Management)
 * [antd](https://www.npmjs.com/package/antd) (React Component Library)
 * [react-json-tree](https://www.npmjs.com/package/react-json-tree) (Render Json Tree)
 * [react-ace](https://www.npmjs.com/package/react-ace) (AceEditor for react)

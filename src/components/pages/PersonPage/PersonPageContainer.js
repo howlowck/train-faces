@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import PersonPage from './PersonPage'
 import { inputChangeNewFaceImage } from 'actions/webcam'
 import { deletePerson, requestGetPerson, setAPerson } from 'actions/person'
-import { inputChangeNewFaceUserData, createFaceWithData } from 'actions/face'
+import { inputChangeNewFaceUserData } from 'actions/face'
 import { closeModal } from 'actions/ui'
 
 const mapStateToProps = (state, { params }) => ({
